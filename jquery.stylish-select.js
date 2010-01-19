@@ -11,7 +11,7 @@ Dual licensed under the MIT and GPL licenses.
 */
 (function($){
 
-    //add class of js to html tag
+    //add class to html tag
     $('html').addClass('stylish-select');
 
     //create cross-browser indexOf
