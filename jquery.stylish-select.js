@@ -10,71 +10,73 @@ Dual licensed under the MIT and GPL licenses.
 
 */
 (function($){
+	//add class to html tag
+	$('html').addClass('stylish-select');
 
-    //add class to html tag
-    $('html').addClass('stylish-select');
+	//create cross-browser indexOf
+	Array.prototype.indexOf = function (obj, start) {
+		for (var i = (start || 0); i < this.length; i++) {
+			if (this[i] == obj) {
+				return i;
+			}
+		}
+	}
 
-    //create cross-browser indexOf
-    Array.prototype.indexOf = function (obj, start) {
-        for (var i = (start || 0); i < this.length; i++) {
-            if (this[i] == obj) {
-                return i;
-            }
-        }
-    }
-	
-    //utility methods
-    $.fn.extend({
-        getSetSSValue: function(value){
-            if (value){
-                //set value and trigger change event
-                $(this).val(value).change();
-                return this;
-            } else {
-                return $(this).find(':selected').val();
-            }
-        },
-        //added by Justin Beasley
-        resetSS: function(){
-            var oldOpts = $(this).data('ssOpts');
-            $this = $(this);
-            $this.next().remove();
-            //unbind all events and redraw
-            $this.unbind().sSelect(oldOpts);
-        }
-    });
+	//utility methods
+	$.fn.extend({
+		getSetSSValue: function(value){
+			if (value){
+				//set value and trigger change event
+				$(this).val(value).change();
+				return this;
+			} else {
+				return $(this).find(':selected').val();
+			}
+		},
+		//added by Justin Beasley
+		resetSS: function(){
+			var oldOpts = $(this).data('ssOpts');
+			$this = $(this);
+			$this.next().remove();
+			//unbind all events and redraw
+			$this.unbind().sSelect(oldOpts);
+		}
+	});
 
-    $.fn.sSelect = function(options) {
-	
-        return this.each(function(){
-			
-            var defaults = {
-                defaultText: 'Please select',
-                animationSpeed: 0, //set speed of dropdown
-                ddMaxHeight: '' //set css max-height value of dropdown
-            };
+	$.fn.sSelect = function(options) {
 
-            //initial variables
-            var opts = $.extend(defaults, options),
-            $input = $(this),
-            $containerDivText = $('<div class="selectedTxt"></div>'),
-            $containerDiv = $('<div class="newListSelected" tabindex="0"></div>'),
-            $newUl = $('<ul class="newList"></ul>'),
-            itemIndex = -1,
-            currentIndex = -1,
-            keys = [],
-            prevKey = false,
-            prevented = false,
-            $newLi;
+		return this.each(function(){
 
-            //added by Justin Beasley
-            $(this).data('ssOpts',options);
-			
-            //build new list
-            $containerDiv.insertAfter($input);
-            $containerDivText.prependTo($containerDiv);
-            $newUl.appendTo($containerDiv);
-            $input.hide();
+		var defaults = {
+			defaultText: 'Please select',
+			animationSpeed: 0, //set speed of dropdown
+			ddMaxHeight: '' //set css max-height value of dropdown
+		};
+
+		//initial variables
+		var opts = $.extend(defaults, options),
+		$input = $(this),
+		$containerDivText = $('<div class="selectedTxt"></div>'),
+		$containerDiv = $('<div class="newListSelected" tabindex="0"></div>'),
+		$newUl = $('<ul class="newList"></ul>'),
+		itemIndex = -1,
+		currentIndex = -1,
+		keys = [],
+		prevKey = false,
+		prevented = false,
+		$newLi;
+
+		//added by Justin Beasley
+		$(this).data('ssOpts',options);
+
+		//build new list
+		$containerDiv.insertAfter($input);
+		$containerDivText.prependTo($containerDiv);
+		$newUl.appendTo($containerDiv);
+		$input.hide();
+
+		//added by Justin Beasley (used for lists initialized while hidden)
+		$containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
 
             //test for optgroup
             if ($input.children('optgroup').length == 0){
@@ -93,13 +95,13 @@ Dual licensed under the MIT and GPL licenses.
                 });
                 //cache list items object
                 $newLi = $newUl.children().children();
-				
+
             } else { //optgroup
                 $input.children('optgroup').each(function(){
-				
+
                     var optionTitle = $(this).attr('label'),
                     $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>');
-						
+
                     $optGroup.appendTo($newUl);
 
                     var $optGroupList = $('<ul></ul>');
@@ -122,12 +124,12 @@ Dual licensed under the MIT and GPL licenses.
                 //cache list items object
                 $newLi = $newUl.find('ul li a');
             }
-			
+
             //get heights of new elements for use later
             var newUlHeight = $newUl.height(),
             containerHeight = $containerDiv.height(),
             newLiLength = $newLi.length;
-		
+
             //check if a value is selected
             if (currentIndex != -1){
                 navigateList(currentIndex, true);
@@ -165,12 +167,12 @@ Dual licensed under the MIT and GPL licenses.
 
             //run function on page load
             newUlPos();
-			
+
             //run function on browser window resize
             $(window).resize(function(){
                 newUlPos();
             });
-			
+
             $(window).scroll(function(){
                 newUlPos();
             });
@@ -183,10 +185,17 @@ Dual licensed under the MIT and GPL licenses.
             function positionHideFix(){
                 $containerDiv.css('position','static');
             }
-			
-            $containerDivText.click(function(event){
 
+            $containerDivText.click(function(event){
                 event.stopPropagation();
+
+				//added by Justin Beasley
+				if($(this).data('ssReRender')) {
+					newUlHeight = $newUl.height('').height();
+					containerHeight = $containerDiv.height();
+					$(this).data('ssReRender',false);
+					newUlPos();
+				}
 
                 //hide all menus apart from this one
                 $('.newList').not($(this).next()).hide().parent().removeClass('newListSelFocus');
@@ -197,16 +206,14 @@ Dual licensed under the MIT and GPL licenses.
                 //scroll list to selected item
                 $newLi.eq(currentIndex).focus();
 
-
             });
 
             $newLi.click(function(e){
-                
                 var $clickedLi = $(e.target);
 
                 //update counter
                 currentIndex = $newLi.index($clickedLi);
-				
+
                 //remove all hilites, then add hilite to selected item
                 prevented = true;
                 navigateList(currentIndex);
@@ -214,7 +221,7 @@ Dual licensed under the MIT and GPL licenses.
                 $containerDiv.css('position','static');//ie
 
             });
-			
+
             $newLi.hover(
                 function(e) {
                     var $hoveredLi = $(e.target);
@@ -237,14 +244,14 @@ Dual licensed under the MIT and GPL licenses.
 
                 var text = $newLi.eq(currentIndex).text();
                 var val = $newLi.eq(currentIndex).parent().data('key');
-                
+
                 //page load
                 if (init == true){
                     $input.val(val);
                     $containerDivText.text(text);
                     return false;
                 }
-                
+
                 $input.val(val)
                 $input.change();
                 $containerDivText.text(text);
@@ -258,15 +265,14 @@ Dual licensed under the MIT and GPL licenses.
                     return false;
                 }
                 $currentOpt = $targetInput.find(':selected');
-                
+
                 //currentIndex = $targetInput.find('option').index($currentOpt);
                 currentIndex = $targetInput.find('option').index($currentOpt);
-
 
                 navigateList(currentIndex, true);
             }
             );
-			
+
             //handle up and down keys
             function keyPress(element) {
                 //when keys are pressed
@@ -313,7 +319,7 @@ Dual licensed under the MIT and GPL licenses.
 
                     //check for keyboard shortcuts
                     keyPressed = String.fromCharCode(keycode).toLowerCase();
-                    
+
                     var currentKeyIndex = keys.indexOf(keyPressed);
 
                     if (typeof currentKeyIndex != 'undefined') { //if key code found in array
@@ -321,7 +327,7 @@ Dual licensed under the MIT and GPL licenses.
                         currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
                         if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed) currentIndex = keys.indexOf(keyPressed); //if no entry was found or new key pressed search from start of array
 
-                        
+
                         navigateList(currentIndex);
                         //store last key pressed
                         prevKey = keyPressed;
@@ -348,7 +354,7 @@ Dual licensed under the MIT and GPL licenses.
                 currentIndex = 0;
                 navigateList(currentIndex);
             }
-			
+
             function gotoLast(){
                 currentIndex = newLiLength-1;
                 navigateList(currentIndex);
@@ -366,14 +372,14 @@ Dual licensed under the MIT and GPL licenses.
             $containerDiv.blur(function(){
                 $(this).removeClass('newListSelFocus');
             });
-			
+
             //hide list on blur
             $('body').click(function(){
                 $containerDiv.removeClass('newListSelFocus');
                 $newUl.hide();
                 positionHideFix();
             });
-			
+
             //add classes on hover
             $containerDivText.hover(function(e) {
                 var $hoveredTxt = $(e.target);
@@ -387,9 +393,9 @@ Dual licensed under the MIT and GPL licenses.
 
             //reset left property and hide
             $newUl.css('left','0').hide();
-			
+
         });
-	  
+
     };
 
 })(jQuery);
