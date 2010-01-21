@@ -39,7 +39,7 @@ Dual licensed under the MIT and GPL licenses.
 			$this = $(this);
 			$this.next().remove();
 			//unbind all events and redraw
-			$this.unbind().sSelect(oldOpts);
+			$this.unbind('.sSelect').sSelect(oldOpts);
 		}
 	});
 
@@ -169,11 +169,11 @@ Dual licensed under the MIT and GPL licenses.
             newUlPos();
 
             //run function on browser window resize
-            $(window).resize(function(){
+            $(window).bind('resize.sSelect',function(){
                 newUlPos();
             });
 
-            $(window).scroll(function(){
+            $(window).bind('scroll.sSelect',function(){
                 newUlPos();
             });
 
@@ -186,7 +186,7 @@ Dual licensed under the MIT and GPL licenses.
                 $containerDiv.css('position','static');
             }
 
-            $containerDivText.click(function(event){
+            $containerDivText.bind('click.sSelect',function(event){
                 event.stopPropagation();
 
 				//added by Justin Beasley
@@ -208,7 +208,7 @@ Dual licensed under the MIT and GPL licenses.
 
             });
 
-            $newLi.click(function(e){
+            $newLi.bind('click.sSelect',function(e){
                 var $clickedLi = $(e.target);
 
                 //update counter
@@ -222,16 +222,17 @@ Dual licensed under the MIT and GPL licenses.
 
             });
 
-            $newLi.hover(
-                function(e) {
-                    var $hoveredLi = $(e.target);
-                    $hoveredLi.addClass('newListHover');
-                },
-                function(e) {
-                    var $hoveredLi = $(e.target);
-                    $hoveredLi.removeClass('newListHover');
-                }
-                );
+            $newLi.bind('mouseenter.sSelect',
+				function(e) {
+					var $hoveredLi = $(e.target);
+					$hoveredLi.addClass('newListHover');
+				}
+			).bind('mouseleave.sSelect',
+				function(e) {
+					var $hoveredLi = $(e.target);
+					$hoveredLi.removeClass('newListHover');
+				}
+			);
 
             function navigateList(currentIndex, init){
                 $newLi.removeClass('hiLite')
@@ -257,7 +258,7 @@ Dual licensed under the MIT and GPL licenses.
                 $containerDivText.text(text);
             };
 
-            $input.change(function(event){
+            $input.bind('change.sSelect',function(event){
                 $targetInput = $(event.target);
                 //stop change function from firing
                 if (prevented == true){
@@ -270,25 +271,18 @@ Dual licensed under the MIT and GPL licenses.
                 currentIndex = $targetInput.find('option').index($currentOpt);
 
                 navigateList(currentIndex, true);
-            }
-            );
+			});
 
             //handle up and down keys
             function keyPress(element) {
                 //when keys are pressed
-                element.onkeydown = function(e){
-                    var keycode;
-                    if (e == null) { //ie
-                        keycode = event.keyCode;
-                    } else { //everything else
-                        keycode = e.which;
-                    }
+                $(element).unbind('keydown.sSelect').bind('keydown.sSelect',function(e){
+                    var keycode = e.which;
 
                     //prevent change function from firing
                     prevented = true;
 
-                    switch(keycode)
-                    {
+                    switch(keycode) {
                         case 40: //down
                         case 39: //right
                             incrementList();
@@ -333,7 +327,7 @@ Dual licensed under the MIT and GPL licenses.
                         prevKey = keyPressed;
                         return false;
                     }
-                }
+                });
             }
 
             function incrementList(){
@@ -360,35 +354,37 @@ Dual licensed under the MIT and GPL licenses.
                 navigateList(currentIndex);
             }
 
-            $containerDiv.click(function(){
+            $containerDiv.bind('click.sSelect',function(){
                 keyPress(this);
             });
 
-            $containerDiv.focus(function(){
+            $containerDiv.bind('focus.sSelect',function(){
                 $(this).addClass('newListSelFocus');
                 keyPress(this);
             });
 
-            $containerDiv.blur(function(){
+            $containerDiv.bind('blur.sSelect',function(){
                 $(this).removeClass('newListSelFocus');
             });
 
             //hide list on blur
-            $('body').click(function(){
+            $('body').bind('click.sSelect',function(){
                 $containerDiv.removeClass('newListSelFocus');
                 $newUl.hide();
                 positionHideFix();
             });
 
             //add classes on hover
-            $containerDivText.hover(function(e) {
-                var $hoveredTxt = $(e.target);
-                $hoveredTxt.parent().addClass('newListSelHover');
-            },
-            function(e) {
-                var $hoveredTxt = $(e.target);
-                $hoveredTxt.parent().removeClass('newListSelHover');
-            }
+            $containerDivText.bind('mouseenter.sSelect',
+				function(e) {
+					var $hoveredTxt = $(e.target);
+					$hoveredTxt.parent().addClass('newListSelHover');
+				}
+			).bind('mouseleave.sSelect',
+				function(e) {
+					var $hoveredTxt = $(e.target);
+					$hoveredTxt.parent().removeClass('newListSelHover');
+				}
             );
 
             //reset left property and hide
