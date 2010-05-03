@@ -253,7 +253,13 @@ Dual licensed under the MIT and GPL licenses.
                     return false;
                 }
 
-                $input.val(val)
+		try {
+		    $input.val(val)
+		} catch(ex) {
+		    // handle ie6 exception
+		    $input[0].selectedIndex = currentIndex;
+		}
+
                 $input.change();
                 $containerDivText.text(text);
             };
