@@ -1,6 +1,6 @@
 /*
 Stylish Select 0.4.1 - $ plugin to replace a select drop down box with a stylable unordered list
-http://scottdarby.com/
+http://github.com/sko77sun/Stylish-Select
 
 Requires: jQuery 1.3 or newer
 
@@ -50,15 +50,16 @@ Dual licensed under the MIT and GPL licenses.
 		var defaults = {
 			defaultText: 'Please select',
 			animationSpeed: 0, //set speed of dropdown
-			ddMaxHeight: '' //set css max-height value of dropdown
+			ddMaxHeight: '', //set css max-height value of dropdown
+			containerClass: '' //additional classes for container div
 		};
 
 		//initial variables
 		var opts = $.extend(defaults, options),
 		$input = $(this),
 		$containerDivText = $('<div class="selectedTxt"></div>'),
-		$containerDiv = $('<div class="newListSelected" tabindex="0"></div>'),
-		$newUl = $('<ul class="newList"></ul>'),
+		$containerDiv = $('<div class="newListSelected ' + opts.containerClass + '"></div>'),
+		$newUl = $('<ul class="newList" style="visibility:hidden;"></ul>'),
 		itemIndex = -1,
 		currentIndex = -1,
 		keys = [],
@@ -71,6 +72,7 @@ Dual licensed under the MIT and GPL licenses.
 
 		//build new list
 		$containerDiv.insertAfter($input);
+		$containerDiv.attr("tabindex", $input.attr("tabindex") || "0");
 		$containerDivText.prependTo($containerDiv);
 		$newUl.appendTo($containerDiv);
 		$input.hide();
@@ -169,13 +171,7 @@ Dual licensed under the MIT and GPL licenses.
             newUlPos();
 
             //run function on browser window resize
-            $(window).bind('resize.sSelect',function(){
-                newUlPos();
-            });
-
-            $(window).bind('scroll.sSelect',function(){
-                newUlPos();
-            });
+			$(window).bind('resize.sSelect scroll.sSelect', newUlPos);
 
             //positioning
             function positionFix(){
@@ -198,7 +194,10 @@ Dual licensed under the MIT and GPL licenses.
 				}
 
                 //hide all menus apart from this one
-                $('.newList').not($(this).next()).hide().parent().removeClass('newListSelFocus');
+				$('.newList').not($(this).next()).hide()
+                    .parent()
+                        .css('position', 'static')
+                        .removeClass('newListSelFocus');
 
                 //show/hide this menu
                 $newUl.toggle();
@@ -262,7 +261,7 @@ Dual licensed under the MIT and GPL licenses.
 
                 $input.change();
                 $containerDivText.text(text);
-            };
+            }
 
             $input.bind('change.sSelect',function(event){
                 $targetInput = $(event.target);
@@ -360,7 +359,8 @@ Dual licensed under the MIT and GPL licenses.
                 navigateList(currentIndex);
             }
 
-            $containerDiv.bind('click.sSelect',function(){
+            $containerDiv.bind('click.sSelect',function(e){
+                e.stopPropagation();
                 keyPress(this);
             });
 
@@ -374,7 +374,7 @@ Dual licensed under the MIT and GPL licenses.
             });
 
             //hide list on blur
-            $('body').bind('click.sSelect',function(){
+            $(document).bind('click.sSelect',function(){
                 $containerDiv.removeClass('newListSelFocus');
                 $newUl.hide();
                 positionHideFix();
@@ -394,7 +394,11 @@ Dual licensed under the MIT and GPL licenses.
             );
 
             //reset left property and hide
-            $newUl.css('left','0').hide();
+            $newUl.css({
+                left: '0',
+                display: 'none',
+                visibility: 'visible'
+            });
 
         });
 
