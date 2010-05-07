@@ -81,7 +81,7 @@ Dual licensed under the MIT and GPL licenses.
             //test for optgroup
             if ($input.children('optgroup').length == 0){
                 $input.children().each(function(i){
-                    var option = $(this).text();
+                    var option = $(this).html();
                     var key = $(this).val();
 
                     //add first letter of each word to array
@@ -110,7 +110,7 @@ Dual licensed under the MIT and GPL licenses.
 
                     $(this).children().each(function(){
                         ++itemIndex;
-                        var option = $(this).text();
+                        var option = $(this).html();
                         var key = $(this).val();
                         //add first letter of each word to array
                         keys.push(option.charAt(0).toLowerCase());
@@ -243,7 +243,7 @@ Dual licensed under the MIT and GPL licenses.
                     $newLi.eq(currentIndex).focus();
                 }
 
-                var text = $newLi.eq(currentIndex).text();
+                var text = $newLi.eq(currentIndex).html();
                 var val = $newLi.eq(currentIndex).parent().data('key');
 
                 //page load
