@@ -14,13 +14,16 @@ Dual licensed under the MIT and GPL licenses.
 	$('html').addClass('stylish-select');
 
 	//create cross-browser indexOf
-	Array.prototype.indexOf = function (obj, start) {
-		for (var i = (start || 0); i < this.length; i++) {
-			if (this[i] == obj) {
-				return i;
-			}
-		}
-	}
+  if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function (obj, start) {
+      for (var i = (start || 0); i < this.length; i++) {
+        if (this[i] == obj) {
+          return i;
+        }
+      }
+      return -1;
+    }
+  }
 
 	//utility methods
 	$.fn.extend({
