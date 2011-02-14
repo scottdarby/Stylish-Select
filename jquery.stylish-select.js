@@ -329,8 +329,10 @@
 					if (typeof currentKeyIndex != 'undefined') { //if key code found in array
 						++currentIndex;
 						currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
-						if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed) currentIndex = keys.indexOf(keyPressed); //if no entry was found or new key pressed search from start of array
-
+						if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed) {
+							// if no entry was found or new key pressed search from start of array
+							currentIndex = keys.indexOf(keyPressed);
+						}
 
 						navigateList(currentIndex);
 						//store last key pressed
