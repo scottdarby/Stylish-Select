@@ -242,7 +242,7 @@ Dual licensed under the MIT and GPL licenses.
                     $newLi.eq(currentIndex).focus();
                 }
 
-                var text = $newLi.eq(currentIndex).html();
+                var text = $newLi.eq(currentIndex).text();
                 var val = $newLi.eq(currentIndex).parent().data('key');
 
                 //page load
