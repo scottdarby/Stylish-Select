@@ -210,6 +210,11 @@
 
 			});
 
+			function closeDropDown(){
+				$newUl.hide();
+				positionHideFix();
+			}
+
 			$newLi.bind('click.sSelect',function(e){
 				var $clickedLi = $(e.target);
 
@@ -219,9 +224,7 @@
 				//remove all hilites, then add hilite to selected item
 				prevented = true;
 				navigateList(currentIndex);
-				$newUl.hide();
-				$containerDiv.css('position','static');//ie
-
+				closeDropDown();
 			});
 
 			$newLi.bind('mouseenter.sSelect',
@@ -313,8 +316,7 @@
 						break;
 					case 13:
 					case 27:
-						$newUl.hide();
-						positionHideFix();
+						closeDropDown();
 						return false;
 						break;
 					}
@@ -379,8 +381,7 @@
 			//hide list on blur
 			$(document).bind('click.sSelect',function(){
 				$containerDiv.removeClass('newListSelFocus');
-				$newUl.hide();
-				positionHideFix();
+				closeDropDown();
 			});
 
 			//add classes on hover
