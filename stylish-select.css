@@ -22,7 +22,7 @@ red curvy example
 ====================================*/
 ul.newList * {margin:0; padding:0;}
 ul.newList a {color: #000; text-decoration:none; display:block;}
-ul.newList {margin:0; padding:0; list-style:none; color:#000; width:290px; background:#fff; position:absolute;  border:1px solid #ccc; top:22px; left:0; overflow:auto; z-index:9999;}
+ul.newList {margin:0; padding:0; list-style:none; color:#000; width:290px; background:#fff; position:absolute;  border:1px solid #ccc; top:22px; left:0; overflow:auto; z-index:2;}
 .newListSelected {width:285px; color:#000; height:19px; padding:3px 0 0 6px; float:left; background:url(select-bg.png) no-repeat;}
 .newListSelected span {width:284px; display:block;}
 ul.newList li a {padding:3px 8px; display: block;}
@@ -43,7 +43,7 @@ windows xp style - div that contains the
 ========================================*/
 #win-xp .newListSelected {background:#FFF url(dropdown.gif) no-repeat scroll 155px 1px; border:1px solid #A5ACB2; color:#000; height:17px; margin-bottom:10px; padding:0; width:173px;}
 #win-xp .newListSelected div {display:block; font-size:0.85em; padding:2px 21px 2px 4px; text-align:left !important; width:149px;}
-#win-xp ul.newList {list-style:none; color:#000; width:172px; background:#fff; border:1px solid #000; top:22px; left:0; height:auto; overflow:auto; font-size: 0.85em; text-align:left!important; position:absolute; z-index:9999;}
+#win-xp ul.newList {list-style:none; color:#000; width:172px; background:#fff; border:1px solid #000; top:22px; left:0; height:auto; overflow:auto; font-size: 0.85em; text-align:left!important; position:absolute; z-index:2;}
 #win-xp ul.newList li {padding:2px 5px!important; border-bottom: 1px solid #cccccc;}
 #win-xp .hiLite {background:#316ac5!important; color:#fff!important;}
 #win-xp .newListHover {background:#ccc!important; color:#000!important; cursor:default;}
