@@ -242,7 +242,10 @@
 
 			function positionHideFix()
 			{
-				$containerDiv.css('position','static');
+				$containerDiv.css(
+				{
+					position: 'static'
+				});
 			}
 
 			$containerDivText.bind('click.sSelect',function(event)
@@ -264,10 +267,9 @@
 					.not($(this).next())
 					.hide()
 					.parent()
-					.parent()
 					.css('position', 'static')
 					.removeClass('newListSelFocus');
-
+					
 				//show/hide this menu
 				$containerDivWrapper.toggle();
 				positionFix();
