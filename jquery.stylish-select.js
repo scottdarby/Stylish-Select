@@ -1,25 +1,23 @@
-/*
-Stylish Select 0.4.2 - $ plugin to replace a select drop down box with a stylable unordered list
-http://github.com/sko77sun/Stylish-Select
-
-Requires: jQuery 1.3 or newer
-
-Contributions from Justin Beasley: http://www.harvest.org/ Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
-
-Dual licensed under the MIT and GPL licenses.
-
+/**
+* Stylish Select 0.4.3 - $ plugin to replace a select drop down box with a stylable unordered list
+* http://github.com/sko77sun/Stylish-Select
+* 
+* Requires: jQuery 1.3 or newer
+* 
+* Contributions from Justin Beasley: http://www.harvest.org/ Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
+* 
+* Dual licensed under the MIT and GPL licenses.
 */
-(function($){
+(function($)
+{
 	//add class to html tag
 	$('html').addClass('stylish-select');
 
-	//from MDN: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
+	//Cross-browser implementation of indexOf from MDN: https://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Array/indexOf
 	if (!Array.prototype.indexOf)
 	{
 		Array.prototype.indexOf = function(searchElement /*, fromIndex */)
 		{
-			"use strict";
-
 			if (this === void 0 || this === null)
 				throw new TypeError();
 
@@ -55,18 +53,24 @@ Dual licensed under the MIT and GPL licenses.
 	}
 
 	//utility methods
-	$.fn.extend({
-		getSetSSValue: function(value){
-			if (value){
+	$.fn.extend(
+	{
+		getSetSSValue: function(value)
+		{
+			if (value)
+			{
 				//set value and trigger change event
 				$(this).val(value).change();
 				return this;
-			} else {
+			}
+			else
+			{
 				return $(this).find(':selected').val();
 			}
 		},
 		//added by Justin Beasley
-		resetSS: function(){
+		resetSS: function()
+		{
 			var oldOpts = $(this).data('ssOpts');
 			$this = $(this);
 			$this.next().remove();
@@ -75,28 +79,29 @@ Dual licensed under the MIT and GPL licenses.
 		}
 	});
 
-	$.fn.sSelect = function(options) {
-
-		return this.each(function(){
-
+	$.fn.sSelect = function(options)
+	{
+		return this.each(function()
+		{
 			var defaults = {
-				defaultText: 'Please select',
+				defaultText:    'Please select',
 				animationSpeed: 0, //set speed of dropdown
-				ddMaxHeight: '', //set css max-height value of dropdown
+				ddMaxHeight:    '', //set css max-height value of dropdown
 				containerClass: '' //additional classes for container div
 			};
 
 			//initial variables
 			var opts = $.extend(defaults, options),
 			$input = $(this),
-			$containerDivText = $('<div class="selectedTxt"></div>'),
-			$containerDiv = $('<div class="newListSelected ' + opts.containerClass + '"></div>'),
-			$newUl = $('<ul class="newList" style="visibility:hidden;"></ul>'),
-			itemIndex = -1,
-			currentIndex = -1,
-			keys = [],
-			prevKey = false,
-			prevented = false,
+			$containerDivText    = $('<div class="selectedTxt"></div>'),
+			$containerDiv        = $('<div class="newListSelected ' + opts.containerClass + '"></div>'),
+			$containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
+			$newUl               = $('<ul class="newList"></ul>'),
+			itemIndex            = -1,
+			currentIndex         = -1,
+			keys                 = [],
+			prevKey              = false,
+			prevented            = false,
 			$newLi;
 
 			//added by Justin Beasley
@@ -107,20 +112,25 @@ Dual licensed under the MIT and GPL licenses.
 			$containerDiv.attr("tabindex", $input.attr("tabindex") || "0");
 			$containerDivText.prependTo($containerDiv);
 			$newUl.appendTo($containerDiv);
+			$newUl.wrap($containerDivWrapper);
+			$containerDivWrapper = $newUl.parent();
 			$input.hide();
 
 			//added by Justin Beasley (used for lists initialized while hidden)
 			$containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
 
 			//test for optgroup
-			if ($input.children('optgroup').length == 0){
-				$input.children().each(function(i){
+			if ($input.children('optgroup').length == 0)
+			{
+				$input.children().each(function(i)
+				{
 					var option = $(this).html();
 					var key = $(this).val();
 
 					//add first letter of each word to array
 					keys.push(option.charAt(0).toLowerCase());
-					if ($(this).attr('selected') == true){
+					if ($(this).attr('selected') == true)
+					{
 						opts.defaultText = option;
 						currentIndex = i;
 					}
@@ -130,25 +140,27 @@ Dual licensed under the MIT and GPL licenses.
 				//cache list items object
 				$newLi = $newUl.children().children();
 
-			} else { //optgroup
-				$input.children('optgroup').each(function(){
-
+			}
+			else //optgroup
+			{
+				$input.children('optgroup').each(function()
+				{
 					var optionTitle = $(this).attr('label'),
-					$optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>');
+					$optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
+					$optGroupList = $('<ul></ul>');
 
 					$optGroup.appendTo($newUl);
-
-					var $optGroupList = $('<ul></ul>');
-
 					$optGroupList.appendTo($optGroup);
 
-					$(this).children().each(function(){
+					$(this).children().each(function()
+					{
 						++itemIndex;
 						var option = $(this).html();
 						var key = $(this).val();
 						//add first letter of each word to array
 						keys.push(option.charAt(0).toLowerCase());
-						if ($(this).attr('selected') == true){
+						if ($(this).attr('selected') == true)
+						{
 							opts.defaultText = option;
 							currentIndex = itemIndex;
 						}
@@ -162,37 +174,54 @@ Dual licensed under the MIT and GPL licenses.
 			//get heights of new elements for use later
 			var newUlHeight = $newUl.height(),
 			containerHeight = $containerDiv.height(),
-			newLiLength = $newLi.length;
+			newLiLength     = $newLi.length;
 
 			//check if a value is selected
-			if (currentIndex != -1){
+			if (currentIndex != -1)
+			{
 				navigateList(currentIndex, true);
-			} else {
+			}
+			else
+			{
 				//set placeholder text
 				$containerDivText.text(opts.defaultText);
 			}
 
 			//decide if to place the new list above or below the drop-down
-			function newUlPos(){
+			function newUlPos()
+			{
 				var containerPosY = $containerDiv.offset().top,
-				docHeight = jQuery(window).height(),
-				scrollTop = jQuery(window).scrollTop();
+				docHeight         = jQuery(window).height(),
+				scrollTop         = jQuery(window).scrollTop();
 
 				//if height of list is greater then max height, set list height to max height value
-				if (newUlHeight > parseInt(opts.ddMaxHeight)) {
+				if (newUlHeight > parseInt(opts.ddMaxHeight))
+				{
 					newUlHeight = parseInt(opts.ddMaxHeight);
 				}
 
 				containerPosY = containerPosY-scrollTop;
-				if (containerPosY+newUlHeight >= docHeight){
-					$newUl.css({
-						top: '-'+newUlHeight+'px',
+				if (containerPosY+newUlHeight >= docHeight)
+				{
+					$newUl.css(
+					{
+						height: newUlHeight
+					});
+					$containerDivWrapper.css({
+						top:    '-'+newUlHeight+'px',
 						height: newUlHeight
 					});
 					$input.onTop = true;
-				} else {
-					$newUl.css({
-						top: containerHeight+'px',
+				}
+				else
+				{
+					$newUl.css(
+					{
+						height: newUlHeight
+					});
+					$containerDivWrapper.css(
+					{
+						top:     containerHeight+'px',
 						height: newUlHeight
 					});
 					$input.onTop = false;
@@ -206,45 +235,55 @@ Dual licensed under the MIT and GPL licenses.
 			$(window).bind('resize.sSelect scroll.sSelect', newUlPos);
 
 			//positioning
-			function positionFix(){
+			function positionFix()
+			{
 				$containerDiv.css('position','relative');
 			}
 
-			function positionHideFix(){
+			function positionHideFix()
+			{
 				$containerDiv.css('position','static');
 			}
 
-			$containerDivText.bind('click.sSelect',function(event){
+			$containerDivText.bind('click.sSelect',function(event)
+			{
 				event.stopPropagation();
 
 				//added by Justin Beasley
-				if($(this).data('ssReRender')) {
+				if($(this).data('ssReRender'))
+				{
 					newUlHeight = $newUl.height('').height();
+					$containerDivWrapper.height('');
 					containerHeight = $containerDiv.height();
 					$(this).data('ssReRender',false);
 					newUlPos();
 				}
-
+				
 				//hide all menus apart from this one
-				$('.newList').not($(this).next()).hide()
-				.parent()
-				.css('position', 'static')
-				.removeClass('newListSelFocus');
+				$('.SSContainerDivWrapper')
+					.not($(this).next())
+					.hide()
+					.parent()
+					.parent()
+					.css('position', 'static')
+					.removeClass('newListSelFocus');
 
 				//show/hide this menu
-				$newUl.toggle();
+				$containerDivWrapper.toggle();
 				positionFix();
+				
 				//scroll list to selected item
 				$newLi.eq(currentIndex).focus();
-
 			});
 
-			function closeDropDown(){
-				$newUl.hide();
+			function closeDropDown()
+			{
+				$containerDivWrapper.hide();
 				positionHideFix();
 			}
 
-			$newLi.bind('click.sSelect',function(e){
+			$newLi.bind('click.sSelect',function(e)
+			{
 				var $clickedLi = $(e.target);
 
 				//update counter
@@ -254,27 +293,30 @@ Dual licensed under the MIT and GPL licenses.
 				prevented = true;
 				navigateList(currentIndex);
 				closeDropDown();
-
 			});
 
 			$newLi.bind('mouseenter.sSelect',
-				function(e) {
+				function(e)
+				{
 					var $hoveredLi = $(e.target);
 					$hoveredLi.addClass('newListHover');
 				}
 				).bind('mouseleave.sSelect',
-				function(e) {
+				function(e)
+				{
 					var $hoveredLi = $(e.target);
 					$hoveredLi.removeClass('newListHover');
 				}
 				);
 
-			function navigateList(currentIndex, init){
+			function navigateList(currentIndex, init)
+			{
 				$newLi.removeClass('hiLite')
 				.eq(currentIndex)
 				.addClass('hiLite');
 
-				if ($newUl.is(':visible')){
+				if ($containerDivWrapper.is(':visible'))
+				{
 					$newLi.eq(currentIndex).focus();
 				}
 
@@ -282,15 +324,19 @@ Dual licensed under the MIT and GPL licenses.
 				var val = $newLi.eq(currentIndex).parent().data('key');
 
 				//page load
-				if (init == true){
+				if (init == true)
+				{
 					$input.val(val);
 					$containerDivText.text(text);
 					return false;
 				}
 
-				try {
+				try
+				{
 					$input.val(val)
-				} catch(ex) {
+				}
+				catch(ex)
+				{
 					// handle ie6 exception
 					$input[0].selectedIndex = currentIndex;
 				}
@@ -299,31 +345,33 @@ Dual licensed under the MIT and GPL licenses.
 				$containerDivText.text(text);
 			}
 
-			$input.bind('change.sSelect',function(event){
+			$input.bind('change.sSelect',function(event)
+			{
 				$targetInput = $(event.target);
 				//stop change function from firing
-				if (prevented == true){
+				if (prevented == true)
+				{
 					prevented = false;
 					return false;
 				}
-				$currentOpt = $targetInput.find(':selected');
-
-				//currentIndex = $targetInput.find('option').index($currentOpt);
+				$currentOpt  = $targetInput.find(':selected');
 				currentIndex = $targetInput.find('option').index($currentOpt);
-
 				navigateList(currentIndex, true);
 			});
 
 			//handle up and down keys
-			function keyPress(element) {
+			function keyPress(element)
+			{
 				//when keys are pressed
-				$(element).unbind('keydown.sSelect').bind('keydown.sSelect',function(e){
+				$(element).unbind('keydown.sSelect').bind('keydown.sSelect',function(e)
+				{
 					var keycode = e.which;
 
 					//prevent change function from firing
 					prevented = true;
 
-					switch(keycode) {
+					switch(keycode)
+					{
 						case 40: //down
 						case 39: //right
 							incrementList();
@@ -356,11 +404,13 @@ Dual licensed under the MIT and GPL licenses.
 
 					var currentKeyIndex = keys.indexOf(keyPressed);
 
-					if (typeof currentKeyIndex != 'undefined') { //if key code found in array
+					if (typeof currentKeyIndex != 'undefined')
+					{ //if key code found in array
 						++currentIndex;
 						currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
 
-						if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed) {
+						if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed)
+						{
 							// if no entry was found or new key pressed search from start of array
 							currentIndex = keys.indexOf(keyPressed);
 						}
@@ -373,65 +423,78 @@ Dual licensed under the MIT and GPL licenses.
 				});
 			}
 
-			function incrementList(){
-				if (currentIndex < (newLiLength-1)) {
+			function incrementList()
+			{
+				if (currentIndex < (newLiLength-1))
+				{
 					++currentIndex;
 					navigateList(currentIndex);
 				}
 			}
 
-			function decrementList(){
-				if (currentIndex > 0) {
+			function decrementList()
+			{
+				if (currentIndex > 0)
+				{
 					--currentIndex;
 					navigateList(currentIndex);
 				}
 			}
 
-			function gotoFirst(){
+			function gotoFirst()
+			{
 				currentIndex = 0;
 				navigateList(currentIndex);
 			}
 
-			function gotoLast(){
+			function gotoLast()
+			{
 				currentIndex = newLiLength-1;
 				navigateList(currentIndex);
 			}
 
-			$containerDiv.bind('click.sSelect',function(e){
+			$containerDiv.bind('click.sSelect',function(e)
+			{
 				e.stopPropagation();
 				keyPress(this);
 			});
 
-			$containerDiv.bind('focus.sSelect',function(){
+			$containerDiv.bind('focus.sSelect',function()
+			{
 				$(this).addClass('newListSelFocus');
 				keyPress(this);
 			});
 
-			$containerDiv.bind('blur.sSelect',function(){
+			$containerDiv.bind('blur.sSelect',function()
+			{
 				$(this).removeClass('newListSelFocus');
 			});
 
 			//hide list on blur
-			$(document).bind('click.sSelect',function(){
+			$(document).bind('click.sSelect',function()
+			{
 				$containerDiv.removeClass('newListSelFocus');
 				closeDropDown();
 			});
 
 			//add classes on hover
 			$containerDivText.bind('mouseenter.sSelect',
-				function(e) {
+				function(e)
+				{
 					var $hoveredTxt = $(e.target);
 					$hoveredTxt.parent().addClass('newListSelHover');
 				}
 				).bind('mouseleave.sSelect',
-				function(e) {
+				function(e)
+				{
 					var $hoveredTxt = $(e.target);
 					$hoveredTxt.parent().removeClass('newListSelHover');
 				}
 				);
 
 			//reset left property and hide
-			$newUl.css({
+			$containerDivWrapper.css(
+			{
 				left: '0',
 				display: 'none',
 				visibility: 'visible'
