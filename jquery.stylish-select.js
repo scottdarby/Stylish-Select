@@ -1,5 +1,5 @@
 /**
-* Stylish Select 0.4.3 - $ plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.4 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/sko77sun/Stylish-Select
 * 
 * Requires: jQuery 1.3 or newer
@@ -99,6 +99,7 @@
 			$newUl               = $('<ul class="newList"></ul>'),
 			itemIndex            = -1,
 			currentIndex         = -1,
+			prevIndex            = -1,
 			keys                 = [],
 			prevKey              = false,
 			prevented            = false,
@@ -129,10 +130,10 @@
 
 					//add first letter of each word to array
 					keys.push(option.charAt(0).toLowerCase());
-					if ($(this).attr('selected') == true)
+					if ($(this).attr('selected') == 'selected')
 					{
 						opts.defaultText = option;
-						currentIndex = i;
+						currentIndex = prevIndex = i;
 					}
 					$newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
 
@@ -159,10 +160,10 @@
 						var key = $(this).val();
 						//add first letter of each word to array
 						keys.push(option.charAt(0).toLowerCase());
-						if ($(this).attr('selected') == true)
+						if ($(this).attr('selected') == 'selected')
 						{
 							opts.defaultText = option;
-							currentIndex = itemIndex;
+							currentIndex = prevIndex = itemIndex;
 						}
 						$optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
 					})
@@ -176,10 +177,11 @@
 			containerHeight = $containerDiv.height(),
 			newLiLength     = $newLi.length;
 
+
 			//check if a value is selected
 			if (currentIndex != -1)
 			{
-				navigateList(currentIndex, true);
+				navigateList(currentIndex);
 			}
 			else
 			{
@@ -191,8 +193,8 @@
 			function newUlPos()
 			{
 				var containerPosY = $containerDiv.offset().top,
-				docHeight         = jQuery(window).height(),
-				scrollTop         = jQuery(window).scrollTop();
+				docHeight         = $(window).height(),
+				scrollTop         = $(window).scrollTop();
 
 				//if height of list is greater then max height, set list height to max height value
 				if (newUlHeight > parseInt(opts.ddMaxHeight))
@@ -264,11 +266,11 @@
 				
 				//hide all menus apart from this one
 				$('.SSContainerDivWrapper')
-					.not($(this).next())
-					.hide()
-					.parent()
-					.css('position', 'static')
-					.removeClass('newListSelFocus');
+				.not($(this).next())
+				.hide()
+				.parent()
+				.css('position', 'static')
+				.removeClass('newListSelFocus');
 					
 				//show/hide this menu
 				$containerDivWrapper.toggle();
@@ -278,8 +280,20 @@
 				$newLi.eq(currentIndex).focus();
 			});
 
-			function closeDropDown()
+			function closeDropDown(fireChange, resetText)
 			{
+				if(fireChange == true)
+				{
+					prevIndex = currentIndex;
+					$input.change();
+				}
+				
+				if(resetText == true)
+				{
+					currentIndex = prevIndex;
+					navigateList(currentIndex);
+				}
+				
 				$containerDivWrapper.hide();
 				positionHideFix();
 			}
@@ -293,7 +307,7 @@
 
 				//remove all hilites, then add hilite to selected item
 				prevented = true;
-				navigateList(currentIndex);
+				navigateList(currentIndex, true);
 				closeDropDown();
 			});
 
@@ -311,54 +325,60 @@
 				}
 				);
 
-			function navigateList(currentIndex, init)
+			function navigateList(currentIndex, fireChange)
 			{
-				$newLi.removeClass('hiLite')
-				.eq(currentIndex)
-				.addClass('hiLite');
-
-				if ($containerDivWrapper.is(':visible'))
+				if(currentIndex == -1)
 				{
-					$newLi.eq(currentIndex).focus();
+					$containerDivText.text(opts.defaultText);
+					$newLi.removeClass('hiLite');
 				}
-
-				var text = $newLi.eq(currentIndex).text();
-				var val = $newLi.eq(currentIndex).parent().data('key');
-
-				//page load
-				if (init == true)
+				else
 				{
-					$input.val(val);
+					$newLi.removeClass('hiLite')
+					.eq(currentIndex)
+					.addClass('hiLite');
+
+					var text = $newLi.eq(currentIndex).text(),
+					val = $newLi.eq(currentIndex).parent().data('key');
+
+					try
+					{
+						$input.val(val)
+					}
+					catch(ex)
+					{
+						// handle ie6 exception
+						$input[0].selectedIndex = currentIndex;
+					}
+
 					$containerDivText.text(text);
-					return false;
+				
+					//only fire change event if specified
+					if(fireChange == true)
+					{
+						prevIndex = currentIndex;
+						$input.change();
+					}
+				
+					if ($containerDivWrapper.is(':visible'))
+					{
+						$newLi.eq(currentIndex).focus();
+					}
 				}
-
-				try
-				{
-					$input.val(val)
-				}
-				catch(ex)
-				{
-					// handle ie6 exception
-					$input[0].selectedIndex = currentIndex;
-				}
-
-				$input.change();
-				$containerDivText.text(text);
 			}
 
 			$input.bind('change.sSelect',function(event)
 			{
-				$targetInput = $(event.target);
+				var $targetInput = $(event.target);
 				//stop change function from firing
 				if (prevented == true)
 				{
 					prevented = false;
 					return false;
 				}
-				$currentOpt  = $targetInput.find(':selected');
+				var $currentOpt  = $targetInput.find(':selected');
 				currentIndex = $targetInput.find('option').index($currentOpt);
-				navigateList(currentIndex, true);
+				navigateList(currentIndex);
 			});
 
 			//handle up and down keys
@@ -394,9 +414,9 @@
 							gotoLast();
 							return false;
 							break;
-						case 13:
-						case 27:
-							closeDropDown();
+						case 13: //enter
+						case 27: //esc
+							closeDropDown(true);
 							return false;
 							break;
 					}
@@ -476,7 +496,15 @@
 			$(document).bind('click.sSelect',function()
 			{
 				$containerDiv.removeClass('newListSelFocus');
-				closeDropDown();
+				
+				if ($containerDivWrapper.is(':visible'))
+				{
+					closeDropDown(false, true);
+				}
+				else
+				{
+					closeDropDown(false);
+				}
 			});
 
 			//add classes on hover
