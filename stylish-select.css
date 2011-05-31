@@ -50,6 +50,7 @@
 	color: #000;
 	text-decoration:none;
 	display:block;
+	padding:3px 8px;
 }
 
 .stylish-select .newListSelected {
@@ -59,16 +60,6 @@
 	padding:3px 0 0 6px;
 	float:left;
 	background:url(select-bg.png) no-repeat;
-}
-
-.stylish-select .newListSelected span {
-	width:284px;
-	display:block;
-}
-
-.stylish-select ul.newList li a {
-	padding:3px 8px;
-	display: block;
 }
 
 .stylish-select ul.newList li a:focus {
@@ -83,11 +74,6 @@
 }
 
 .stylish-select .hiLite {
-	background:#650101!important;
-	color:#fff!important;
-}
-
-.stylish-select .hiLite a {
 	background:#650101!important;
 	color:#fff!important;
 }
