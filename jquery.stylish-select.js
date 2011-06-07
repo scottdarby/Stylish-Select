@@ -120,63 +120,6 @@
 			//added by Justin Beasley (used for lists initialized while hidden)
 			$containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
 
-      // DEPRECATED:
-      // @raulbarrosoleon comment: Why do we have to make differences between single opts and optgroup?. I'd prefer to allow any option.
-      
-      
-			//test for optgroup
-      // if ($input.children('optgroup').length == 0)
-      // {
-      //  $input.children().each(function(i)
-      //  {
-      //    var option = $(this).html();
-      //    var key = $(this).val();
-      // 
-      //    //add first letter of each word to array
-      //    keys.push(option.charAt(0).toLowerCase());
-      //    if ($(this).attr('selected') == 'selected')
-      //    {
-      //      opts.defaultText = option;
-      //      currentIndex = prevIndex = i;
-      //    }
-      //    $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
-      // 
-      //  });
-      //  //cache list items object
-      //  $newLi = $newUl.children().children();
-      // 
-      // }
-      // else //optgroup
-      // {
-      //  $input.children('optgroup').each(function()
-      //  {
-      //    var optionTitle = $(this).attr('label'),
-      //    $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
-      //    $optGroupList = $('<ul></ul>');
-      // 
-      //    $optGroup.appendTo($newUl);
-      //    $optGroupList.appendTo($optGroup);
-      // 
-      //    $(this).children().each(function()
-      //    {
-      //      ++itemIndex;
-      //      var option = $(this).html();
-      //      var key = $(this).val();
-      //      //add first letter of each word to array
-      //      keys.push(option.charAt(0).toLowerCase());
-      //      if ($(this).attr('selected') == 'selected')
-      //      {
-      //        opts.defaultText = option;
-      //        currentIndex = prevIndex = itemIndex;
-      //      }
-      //      $optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
-      //    })
-      //  });
-      //  //cache list items object
-      //  $newLi = $newUl.find('ul li a');
-      // }
-
-
       // @raulbarrosleon: MY PROPOSAL.
       /**********************/
       // changed by Raúl Barroso to allow "optgroup" + "options" in the same combo.
