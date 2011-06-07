@@ -120,58 +120,75 @@
 			//added by Justin Beasley (used for lists initialized while hidden)
 			$containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
 
-			//test for optgroup
-			if ($input.children('optgroup').length == 0)
-			{
-				$input.children().each(function(i)
-				{
-					var option = $(this).html();
-					var key = $(this).val();
+      // @raulbarrosleon: MY PROPOSAL.
+      /**********************/
+      // changed by Raúl Barroso to allow "optgroup" + "options" in the same combo.
+      // Now, the label itself is another option
+      var option = "";
+      var key = "";
+      $input.children().each(function(i){
+        // is a single option
+        if ($(this).is("option")){
 
-					//add first letter of each word to array
-					keys.push(option.charAt(0).toLowerCase());
-					if ($(this).attr('selected') == 'selected')
-					{
-						opts.defaultText = option;
-						currentIndex = prevIndex = i;
-					}
-					$newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+         //add first letter of each word to array
+         keys.push(option.charAt(0).toLowerCase());
+         if ($(this).attr('selected') == true){
+             opts.defaultText = option;
+             currentIndex = i;
+         }
+         option = $(this).html();
+         key = $(this).val();
+         
+         $newUl.append($('<li key="'+key+'"><a href="JavaScript:void(0);">'+option+'</a></li>'));  
+        
+        }else if ($(this).is("optgroup")){ // is a group
+          
+          // We have to get the correct values
+          option = $(this).attr('label');
+          
+          var $subUl = $('<ul class="hidden"></ul>');
+          
+          $newUl.append($('<li class="newListOptionTitle"><a href="JavaScript:void(0);">'+option+'</a></li>'));  
+          
+          
+          // if we don't want to group by options
+          if (!$(this).parent().hasClass('not-clustered')){
+            // Adding a different "li"
+            $newUl.children('.newListOptionTitle:last').attr('id','element_'+i);
+            $newUl.children('.newListOptionTitle:last').addClass('clustered');
+            $newUl.children('.newListOptionTitle:last').prepend('<span class="expand_element">[+]</span>');
+            // $('#element_'+i).prepend('<span class="expand_element">[+]</span>');
+          }
+          
+          $newUl.children('li:last').append($subUl);  
 
-				});
-				//cache list items object
-				$newLi = $newUl.children().children();
+          // Inspect each element of this optgroup
+          $(this).children().each(function(j){
 
-			}
-			else //optgroup
-			{
-				$input.children('optgroup').each(function()
-				{
-					var optionTitle = $(this).attr('label'),
-					$optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
-					$optGroupList = $('<ul></ul>');
+            option = $(this).html();
+            key = $(this).val();
 
-					$optGroup.appendTo($newUl);
-					$optGroupList.appendTo($optGroup);
+             ++itemIndex;
+             
+             //add first letter of each word to array
+             keys.push(option.charAt(0).toLowerCase());
+             if ($(this).attr('selected') == true){
+                 opts.defaultText = option;
+                 currentIndex = itemIndex;
+                  
+             }
 
-					$(this).children().each(function()
-					{
-						++itemIndex;
-						var option = $(this).html();
-						var key = $(this).val();
-						//add first letter of each word to array
-						keys.push(option.charAt(0).toLowerCase());
-						if ($(this).attr('selected') == 'selected')
-						{
-							opts.defaultText = option;
-							currentIndex = prevIndex = itemIndex;
-						}
-						$optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
-					})
-				});
-				//cache list items object
-				$newLi = $newUl.find('ul li a');
-			}
+            $subUl.append($('<li key="'+key+'"><a href="JavaScript:void(0);">'+option+'</a></li>'));
+          });
+        }
 
+      });
+      $newLi = $newUl.find('a');
+      $expand_element = $newUl.find('.expand_element');
+      
+      
+      /**********************/
+      
 			//get heights of new elements for use later
 			var newUlHeight = $newUl.height(),
 			containerHeight = $containerDiv.height(),
@@ -249,7 +266,7 @@
 					position: 'static'
 				});
 			}
-
+      
 			$containerDivText.bind('click.sSelect',function(event)
 			{
 				event.stopPropagation();
@@ -280,6 +297,22 @@
 				if(currentIndex == -1) currentIndex = 0;
 				$newLi.eq(currentIndex).focus();
 			});
+			
+			// Binding expand or collapse suboptions list
+			if ($expand_element.length > 0){
+        $expand_element.bind('click.sSelect',function(event){
+            event.stopPropagation();             
+          if (!$(this).parent().children('ul').hasClass('hidden')) {
+            $(this).parent().children('ul').addClass('hidden');
+            $(this).parent().children('ul').css('display','none');
+            $(this).text('[+]');
+          }else {
+            $(this).parent().children('ul').removeClass('hidden');                
+            $(this).parent().children('ul').css('display','block');
+            $(this).text('[-]');
+          }              
+        });
+			}
 
 			function closeDropDown(fireChange, resetText)
 			{
