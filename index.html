@@ -58,7 +58,7 @@
         <p>The plugin can be used to replace any select with the following:</p>
         <pre class="brush: javascript">
 $(document).ready(function(){
-	$('#my-dropdown').sSelect();
+  $('#my-dropdown').sSelect();
 });
         </pre>
         <div class="selCont">
@@ -97,7 +97,9 @@ $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
         <div class="selCont">
             <h2>Grouped options</h2>
             <p>Stylish Select supports optgroups.</p>
-            <select id="my-dropdown2" name="my-dropdown">
+            
+            <!-- not clustered  CLASS IS TO DON'T BE CLUSTERED BY "+" ELEMENT  -->
+            <select id="my-dropdown2" name="my-dropdown" class="not-clustered">
                 <optgroup label="Tool">
                     <option value="1">Opiate</option>
                     <option value="2">Undertow</option>
@@ -113,146 +115,169 @@ $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
                 </optgroup>
             </select>
         </div>
+        <div class="selCont">
+            <h2>Grouped and single options (@raulbarrosoleon)</h2>
+            <p>Stylish Select supports optgroups and single options</p>
+            <select id="my-dropdown3" name="my-dropdown-mixed">
+                <option value="1">The Book Thief</option>
+                <optgroup label="Game of Thrones" value="2">
+                    <option value="3">A Game of Thrones</option>
+                    <option value="4">A Clash of Kings</option>
+                    <option value="5">A Storm of Swords</option>
+                    <option value="6">A Feast for Crows</option>
+                    <option value="7">A Dance with Dragons</option>                    
+                </optgroup>
+                <option value="8">The Pillars of the Earth</option>
+                <optgroup value="9" label="The Godfather series">
+                    <option value="10">The Godfather</option>
+                    <option value="11">The Sicilian</option>
+                    <option value="12">The Godfather Returns</option>
+                    <option value="13">The Godfather's Revenge</option>
+                </optgroup>
+                <option value="14">The Thirteenth Tale</option>
+            </select>
+        </div>
+        
         <div id="get-set" class="selCont">
-            <h2>Getting/setting the value</h2>
-            <pre class="brush: javascript">
-//set value
-$('#setVal').click(function(){
-	$('#my-dropdown5').getSetSSValue(4);
-});
+                    <h2>Getting/setting the value</h2>
+                    <pre class="brush: javascript">
+        //set value
+        $('#setVal').click(function(){
+          $('#my-dropdown5').getSetSSValue(4);
+        });
 
-//get value
-$('#getVal').click(function(){
-	alert('The value is: '+$('#my-dropdown5').getSetSSValue());
-});
-            </pre>
-            <p><a id="setVal" href="javascript:void(0)">Set value to 4</a></p>
-            <p><a id="getVal" href="javascript:void(0)">Get value</a></p>
-            <select id="my-dropdown5" name="my-dropdown">
-                <option value="1">Lorem</option>
-                <option value="2">Ipsum</option>
-                <option value="3">Dolor</option>
-                <option value="4">Sit</option>
-                <option value="5">Amet</option>
-                <option value="6">Consectetuer</option>
-                <option value="7">Adipiscing</option>
-            </select>
-        </div>
-        <div id="update" class="selCont">
-            <h2>Add new options to Stylish Select</h2>
-            <pre class="brush: javascript">
-//add options to select and update
-$('#addOptions').click(function(){
-	$('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
-});
-            </pre>
-            <p>If you add or remove options from the initial select element on the page, be sure to call the .resetSS() method on the select to update the Stylish Select replacement.</p>
+        //get value
+        $('#getVal').click(function(){
+          alert('The value is: '+$('#my-dropdown5').getSetSSValue());
+        });
+                    </pre>
+                    <p><a id="setVal" href="javascript:void(0)">Set value to 4</a></p>
+                    <p><a id="getVal" href="javascript:void(0)">Get value</a></p>
+                    <select id="my-dropdown5" name="my-dropdown">
+                        <option value="1">Lorem</option>
+                        <option value="2">Ipsum</option>
+                        <option value="3">Dolor</option>
+                        <option value="4">Sit</option>
+                        <option value="5">Amet</option>
+                        <option value="6">Consectetuer</option>
+                        <option value="7">Adipiscing</option>
+                    </select>
+                </div>
+                <div id="update" class="selCont">
+                    <h2>Add new options to Stylish Select</h2>
+                    <pre class="brush: javascript">
+        //add options to select and update
+        $('#addOptions').click(function(){
+          $('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
+        });
+                    </pre>
+                    <p>If you add or remove options from the initial select element on the page, be sure to call the .resetSS() method on the select to update the Stylish Select replacement.</p>
 
-            <p><a id="addOptions" href="javascript:void(0)">Add new options to select and update</a></p>
-            <select id="my-dropdown6" name="my-dropdown">
-                <option value="1">Lorem</option>
-                <option value="2">Ipsum</option>
-                <option value="3">Dolor</option>
-                <option value="4">Sit</option>
-                <option value="5">Amet</option>
-                <option value="6">Consectetuer</option>
-                <option value="7">Adipiscing</option>
-                <option value="7">Adipiscing</option>
-                <option value="7">Adipiscing</option>
-                <option value="7">Adipiscing</option>
-            </select>
-        </div>
-        <div id="update" class="selCont">
-            <h2>Max-height for large lists</h2>
-            <pre class="brush: javascript">
-$('#my-dropdown').sSelect({ddMaxHeight: '300px'});
-            </pre>
-            <select id="my-dropdownCountries" name="my-dropdown">
-                <option value="1">Afghanistan</option>
-                <option value="1">Akrotiri</option>
-                <option value="1">Albania</option>
-                <option value="1">Algeria</option>
-                <option value="1">American Samoa</option>
-                <option value="1">Andorra</option>
-                <option value="1">Angola</option>
-                <option value="1">Anguilla</option>
-                <option value="1">Antarctica</option>
-                <option value="1">Antigua and Barbuda</option>
-                <option value="1">Argentina</option>
-                <option value="1">Armenia</option>
-                <option value="1">Aruba</option>
-                <option value="1">Ashmore and Cartier Islands</option>
-                <option value="1">Australia</option>
-                <option value="1">Austria</option>
-                <option value="1">Azerbaijan</option>
-                <option value="1">Bahamas, The</option>
-                <option value="1">Bahrain</option>
-                <option value="1">Bangladesh</option>
-                <option value="1">Barbados</option>
-                <option value="1">Bassas da India</option>
-                <option value="1">Belarus</option>
-                <option value="1">Belgium</option>
-                <option value="1">Belize</option>
-                <option value="1">Benin</option>
-                <option value="1">Bermuda</option>
-                <option value="1">Bhutan</option>
-                <option value="1">Bolivia</option>
-                <option value="1">Bosnia and Herzegovina</option>
-                <option value="1">Botswana</option>
-                <option value="1">Bouvet Island</option>
-                <option value="1">Brazil</option>
-                <option value="1">British Indian Ocean Territory</option>
-                <option value="1">British Virgin Islands</option>
-                <option value="1">Brunei</option>
-                <option value="1">Bulgaria</option>
-                <option value="1">Burkina Faso</option>
-                <option value="1">Burma</option>
-                <option value="1">Burundi</option>
-                <option value="1">Cambodia</option>
-                <option value="1">Cameroon</option>
-                <option value="1">Canada</option>
-                <option value="1">Cape Verde</option>
-                <option value="1">Cayman Islands</option>
-                <option value="1">Central African Republic</option>
-                <option value="1">Chad</option>
-                <option value="1">Chile</option>
-                <option value="1">China</option>
-                <option value="1">Christmas Island</option>
-                <option value="1">Clipperton Island</option>
-                <option value="1">Cocos (Keeling) Islands</option>
-                <option value="1">Colombia</option>
-                <option value="1">Comoros</option>
-                <option value="1">Congo, Democratic Republic of the</option>
-                <option value="1">Congo, Republic of the</option>
-                <option value="1">Cook Islands</option>
-                <option value="1">Coral Sea Islands</option>
-                <option value="1">Costa Rica</option>
-                <option value="1">Cote d'Ivoire</option>
-                <option value="1">Croatia</option>
-                <option value="1">Cuba</option>
-                <option value="1">Cyprus</option>
-                <option value="1">Czech Republic</option>
-                <option value="1">Denmark</option>
-                <option value="1">Dhekelia</option>
-                <option value="1">Djibouti</option>
-                <option value="1">Dominica</option>
-                <option value="1">Dominican Republic</option>
-                <option value="1">Ecuador</option>
-                <option value="1">Egypt</option>
-                <option value="1">El Salvador</option>
-                <option value="1">Equatorial Guinea</option>
-                <option value="1">Eritrea</option>
-                <option value="1">Estonia</option>
-                <option value="1">Ethiopia</option>
-                <option value="1">Europa Island</option>
-                <option value="1">Falkland Islands (Islas Malvinas)</option>
-                <option value="1">Faroe Islands</option>
-                <option value="1">Fiji</option>
-                <option value="1">Finland</option>
-                <option value="1">France</option>
-                <option value="1">French Guiana</option>
-            </select>
-        </div>
+                    <p><a id="addOptions" href="javascript:void(0)">Add new options to select and update</a></p>
+                    <select id="my-dropdown6" name="my-dropdown">
+                        <option value="1">Lorem</option>
+                        <option value="2">Ipsum</option>
+                        <option value="3">Dolor</option>
+                        <option value="4">Sit</option>
+                        <option value="5">Amet</option>
+                        <option value="6">Consectetuer</option>
+                        <option value="7">Adipiscing</option>
+                        <option value="7">Adipiscing</option>
+                        <option value="7">Adipiscing</option>
+                        <option value="7">Adipiscing</option>
+                    </select>
+                </div>
+                <div id="update" class="selCont">
+                    <h2>Max-height for large lists</h2>
+                    <pre class="brush: javascript">
+        $('#my-dropdown').sSelect({ddMaxHeight: '300px'});
+                    </pre>
+                    <select id="my-dropdownCountries" name="my-dropdown">
+                        <option value="1">Afghanistan</option>
+                        <option value="1">Akrotiri</option>
+                        <option value="1">Albania</option>
+                        <option value="1">Algeria</option>
+                        <option value="1">American Samoa</option>
+                        <option value="1">Andorra</option>
+                        <option value="1">Angola</option>
+                        <option value="1">Anguilla</option>
+                        <option value="1">Antarctica</option>
+                        <option value="1">Antigua and Barbuda</option>
+                        <option value="1">Argentina</option>
+                        <option value="1">Armenia</option>
+                        <option value="1">Aruba</option>
+                        <option value="1">Ashmore and Cartier Islands</option>
+                        <option value="1">Australia</option>
+                        <option value="1">Austria</option>
+                        <option value="1">Azerbaijan</option>
+                        <option value="1">Bahamas, The</option>
+                        <option value="1">Bahrain</option>
+                        <option value="1">Bangladesh</option>
+                        <option value="1">Barbados</option>
+                        <option value="1">Bassas da India</option>
+                        <option value="1">Belarus</option>
+                        <option value="1">Belgium</option>
+                        <option value="1">Belize</option>
+                        <option value="1">Benin</option>
+                        <option value="1">Bermuda</option>
+                        <option value="1">Bhutan</option>
+                        <option value="1">Bolivia</option>
+                        <option value="1">Bosnia and Herzegovina</option>
+                        <option value="1">Botswana</option>
+                        <option value="1">Bouvet Island</option>
+                        <option value="1">Brazil</option>
+                        <option value="1">British Indian Ocean Territory</option>
+                        <option value="1">British Virgin Islands</option>
+                        <option value="1">Brunei</option>
+                        <option value="1">Bulgaria</option>
+                        <option value="1">Burkina Faso</option>
+                        <option value="1">Burma</option>
+                        <option value="1">Burundi</option>
+                        <option value="1">Cambodia</option>
+                        <option value="1">Cameroon</option>
+                        <option value="1">Canada</option>
+                        <option value="1">Cape Verde</option>
+                        <option value="1">Cayman Islands</option>
+                        <option value="1">Central African Republic</option>
+                        <option value="1">Chad</option>
+                        <option value="1">Chile</option>
+                        <option value="1">China</option>
+                        <option value="1">Christmas Island</option>
+                        <option value="1">Clipperton Island</option>
+                        <option value="1">Cocos (Keeling) Islands</option>
+                        <option value="1">Colombia</option>
+                        <option value="1">Comoros</option>
+                        <option value="1">Congo, Democratic Republic of the</option>
+                        <option value="1">Congo, Republic of the</option>
+                        <option value="1">Cook Islands</option>
+                        <option value="1">Coral Sea Islands</option>
+                        <option value="1">Costa Rica</option>
+                        <option value="1">Cote d'Ivoire</option>
+                        <option value="1">Croatia</option>
+                        <option value="1">Cuba</option>
+                        <option value="1">Cyprus</option>
+                        <option value="1">Czech Republic</option>
+                        <option value="1">Denmark</option>
+                        <option value="1">Dhekelia</option>
+                        <option value="1">Djibouti</option>
+                        <option value="1">Dominica</option>
+                        <option value="1">Dominican Republic</option>
+                        <option value="1">Ecuador</option>
+                        <option value="1">Egypt</option>
+                        <option value="1">El Salvador</option>
+                        <option value="1">Equatorial Guinea</option>
+                        <option value="1">Eritrea</option>
+                        <option value="1">Estonia</option>
+                        <option value="1">Ethiopia</option>
+                        <option value="1">Europa Island</option>
+                        <option value="1">Falkland Islands (Islas Malvinas)</option>
+                        <option value="1">Faroe Islands</option>
+                        <option value="1">Fiji</option>
+                        <option value="1">Finland</option>
+                        <option value="1">France</option>
+                        <option value="1">French Guiana</option>
+                    </select>
+                </div>
         <div class="selCont">
             <h2>Intelligent positioning</h2>
             <p>Stylish Select will always remain visible on the page.</p>

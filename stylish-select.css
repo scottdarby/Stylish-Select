@@ -30,19 +30,22 @@
 	z-index:2;
 }
 
+.stylish-select ul.newList * {
+  	list-style:none;
+  	padding:0;
+}
+
 .stylish-select ul.newList {
 	margin:0;
 	padding:0;
-	list-style:none;
 	color:#000;
 	background:#fff;
 	border:1px solid #ccc;
 	overflow:auto;
 }
 
-.stylish-select ul.newList * {
+.stylish-select ul.newList {
 	margin:0;
-	padding:0;
 }
 
 
@@ -94,11 +97,18 @@
 	font-weight:bold;
 }
 
-.stylish-select .newListOptionTitle ul {
-	margin:3px 0 0;
+.stylish-select .newListOptionTitle ul {  
+	margin:3px 0 0 25px;
 }
 
+.stylish-select .clustered ul {  
+  display:none;
+}
 .stylish-select .newListOptionTitle li {
 	font-weight:normal;
-	border-left:1px solid #ccc;
+	border-left:1px dotted #ccc;
 }
+
+/* to allow displayed list  - @raulbarrosoleon*/
+.expand_element {float:left; color:#00307E; width:15px; margin:2px 3px 0 10px; z-index:30; position:relative;}
+.expand_element:hover {color:#001D4D; cursor:pointer;}
