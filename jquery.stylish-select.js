@@ -130,7 +130,7 @@
 
 					//add first letter of each word to array
 					keys.push(option.charAt(0).toLowerCase());
-					if ($(this).attr('selected') == 'selected')
+					if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true)
 					{
 						opts.defaultText = option;
 						currentIndex = prevIndex = i;
@@ -160,7 +160,7 @@
 						var key = $(this).val();
 						//add first letter of each word to array
 						keys.push(option.charAt(0).toLowerCase());
-						if ($(this).attr('selected') == 'selected')
+						if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true)
 						{
 							opts.defaultText = option;
 							currentIndex = prevIndex = itemIndex;
