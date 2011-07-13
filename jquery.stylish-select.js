@@ -125,7 +125,7 @@
 			{
 				$input.children().each(function(i)
 				{
-					var option = $(this).html();
+					var option = $(this).text();
 					var key = $(this).val();
 
 					//add first letter of each word to array
@@ -156,7 +156,7 @@
 					$(this).children().each(function()
 					{
 						++itemIndex;
-						var option = $(this).html();
+						var option = $(this).text();
 						var key = $(this).val();
 						//add first letter of each word to array
 						keys.push(option.charAt(0).toLowerCase());
