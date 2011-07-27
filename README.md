@@ -1,4 +1,5 @@
-** Aditional information **
+Additional information
+=============
 
 If you want to customize a multi-select you only have to add an optional class like this (for example):
 
@@ -13,4 +14,4 @@ This is a jquery bug. It's impossible to set height and width if it's inside a h
 
 I've changed plugin to allow this.
 
-Any question: @raulbarrosoleon
+Any question: [@raulbarrosoleon](http://twitter.com/raulbarrosoleon)
