@@ -81,8 +81,6 @@
 
 	$.fn.sSelect = function(options)
 	{
-	  var elToShow = '';
-    
     
 		return this.each(function()
 		{
@@ -92,15 +90,14 @@
 				ddMaxHeight:    '', //set css max-height value of dropdown
 				containerClass: '' //additional classes for container div
 			};
-
-      elToShow = $(this).parents(":hidden:last");
+      
+      var elToShow = $(this).parents(":hidden:last");
 
   		if (elToShow.html() != null && elToShow.html().trim()){ // not empty
-
         var hideElement = 1;
         elToShow.show();
   		}
-  	  
+  		
 			//initial variables
 			var opts = $.extend(defaults, options),
 			$input = $(this),
@@ -118,11 +115,14 @@
 
 			//added by Justin Beasley
 			$(this).data('ssOpts',options);
-
+      
+      // If it's a multiselect combo
+      var multiSelect = $containerDiv.hasClass('multi-select');
+      
 			//build new list
 			$containerDiv.insertAfter($input);
 			$containerDiv.attr("tabindex", $input.attr("tabindex") || "0");
-			$containerDivText.prependTo($containerDiv);
+			$containerDivText.prependTo($containerDiv);			
 			$newUl.appendTo($containerDiv);
 			$newUl.wrap($containerDivWrapper);
 			$containerDivWrapper = $newUl.parent();
@@ -130,7 +130,8 @@
 
 			//added by Justin Beasley (used for lists initialized while hidden)
 			$containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
-
+      
+      
 			//test for optgroup
 			if ($input.children('optgroup').length == 0)
 			{
@@ -145,8 +146,17 @@
 					{
 						opts.defaultText = option;
 						currentIndex = prevIndex = i;
+						
 					}
-					$newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+					
+					// if it's selected
+					if (currentIndex != i) {
+            $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+					}else {
+					  $newUl.append($('<li><a class="hiLite" href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+					}
+					
+    			
 				});
 				//cache list items object
 				$newLi = $newUl.children().children();
@@ -192,14 +202,23 @@
 			//check if a value is selected
 			if (currentIndex != -1)
 			{
-				navigateList(currentIndex);
+				if (!multiSelect) navigateList(currentIndex);
+				else {
+          
+          $input.find('option :selected').each(function(value){
+                     $newLi.eq(value+1).toggleClass('hiLite');
+                   });
+                   
+          updateDivText();
+				  
+				}
 			}
 			else
 			{
 				//set placeholder text
 				$containerDivText.text(opts.defaultText);
 			}
-
+      
 			//decide if to place the new list above or below the drop-down
 			function newUlPos()
 			{
@@ -277,13 +296,16 @@
 					newUlPos();
 				}
 				
-				//hide all menus apart from this one
-				$('.SSContainerDivWrapper')
-				.not($(this).next())
-				.hide()
-				.parent()
-				.css('position', 'static')
-				.removeClass('newListSelFocus');
+				if (!multiSelect) {
+  				//hide all menus apart from this one
+  				$('.SSContainerDivWrapper')
+  				.not($(this).next())
+  				.hide()
+  				.parent()
+  				.css('position', 'static')
+  				.removeClass('newListSelFocus');
+				  
+				}
 					
 				//show/hide this menu
 				$containerDivWrapper.toggle();
@@ -322,7 +344,8 @@
 				//remove all hilites, then add hilite to selected item
 				prevented = true;
 				navigateList(currentIndex, true);
-				closeDropDown();
+				
+				if (!multiSelect) closeDropDown();
 			});
 
 			$newLi.bind('mouseenter.sSelect',
@@ -348,30 +371,54 @@
 				}
 				else
 				{
-					$newLi.removeClass('hiLite')
-					.eq(currentIndex)
-					.addClass('hiLite');
+				  if (!multiSelect) {
 
-					var text = $newLi.eq(currentIndex).text(),
-					val = $newLi.eq(currentIndex).parent().data('key');
+  					$newLi.removeClass('hiLite')
+  					.eq(currentIndex)
+  					.addClass('hiLite');
 
-					try
-					{
-						$input.val(val)
-					}
-					catch(ex)
-					{
-						// handle ie6 exception
-						$input[0].selectedIndex = currentIndex;
-					}
+  					var text = $newLi.eq(currentIndex).text(),
+  					val = $newLi.eq(currentIndex).parent().data('key');
+  					          
+  					try
+  					{
+              $input.val(val);
+  					}
+  					catch(ex)
+  					{
+  						// handle ie6 exception
+  						$input[0].selectedIndex = currentIndex;
+  					}
 
-					$containerDivText.text(text);
-				
+  					$containerDivText.text(text);
+				  
+				  } else {
+				    
+            if ($newLi.eq(currentIndex).hasClass('hiLite')){
+              
+              $input.find('option[value='+(currentIndex+1)+']').removeAttr("selected");
+              
+            }else {
+              var exists = false;
+              $input.find('option[value='+(currentIndex+1)+']').attr("selected","selected");
+            }
+            
+            $newLi.eq(currentIndex).toggleClass('hiLite');				  
+            
+          }
+				  
 					//only fire change event if specified
 					if(fireChange == true)
 					{
 						prevIndex = currentIndex;
 						$input.change();
+						
+						if (!multiSelect){
+              $containerDivText.text(text);  
+            }else {
+             updateDivText();
+            }
+            
 					}
 				
 					if ($containerDivWrapper.is(':visible'))
@@ -489,6 +536,20 @@
 				navigateList(currentIndex);
 			}
 
+      function updateDivText(){
+         var elementsSelected = $newUl.find('.hiLite').length;
+          if (elementsSelected == 0) {
+            $containerDivText.text('Please select');
+            // $input.find(':selected').removeAttr('selected');
+          }
+          else if (elementsSelected == 1) {
+            text = $newUl.find('.hiLite').html();
+            $containerDivText.text(text);    
+          }else {
+            $containerDivText.text(elementsSelected + ' seleccionados');
+          }
+      }
+
 			$containerDiv.bind('click.sSelect',function(e)
 			{
 				e.stopPropagation();
@@ -513,7 +574,7 @@
 				
 				if ($containerDivWrapper.is(':visible'))
 				{
-					closeDropDown(false, true);
+					closeDropDown(false);// , true);
 				}
 				else
 				{
