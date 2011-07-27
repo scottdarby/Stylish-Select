@@ -81,6 +81,15 @@
 
 	$.fn.sSelect = function(options)
 	{
+	  var elToShow = $(this).parents(":hidden:last");
+
+		if (elToShow.html() != null && elToShow.html().trim()){ // not empty
+
+      var hideElement = 1;
+      elToShow.show();
+		}
+    
+    
 		return this.each(function()
 		{
 			var defaults = {
@@ -136,7 +145,6 @@
 						currentIndex = prevIndex = i;
 					}
 					$newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
-
 				});
 				//cache list items object
 				$newLi = $newUl.children().children();
@@ -172,12 +180,13 @@
 				$newLi = $newUl.find('ul li a');
 			}
 
-			//get heights of new elements for use later
+			// get heights of new elements for use later					
 			var newUlHeight = $newUl.height(),
 			containerHeight = $containerDiv.height(),
 			newLiLength     = $newLi.length;
 
-
+      if (hideElement) elToShow.hide();
+      
 			//check if a value is selected
 			if (currentIndex != -1)
 			{
@@ -201,7 +210,9 @@
 				{
 					newUlHeight = parseInt(opts.ddMaxHeight);
 				}
-
+        
+        
+        
 				containerPosY = containerPosY-scrollTop;
 				if (containerPosY+newUlHeight >= docHeight)
 				{
