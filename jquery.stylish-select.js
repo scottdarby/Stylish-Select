@@ -81,13 +81,7 @@
 
 	$.fn.sSelect = function(options)
 	{
-	  var elToShow = $(this).parents(":hidden:last");
-
-		if (elToShow.html() != null && elToShow.html().trim()){ // not empty
-
-      var hideElement = 1;
-      elToShow.show();
-		}
+	  var elToShow = '';
     
     
 		return this.each(function()
@@ -99,6 +93,14 @@
 				containerClass: '' //additional classes for container div
 			};
 
+      elToShow = $(this).parents(":hidden:last");
+
+  		if (elToShow.html() != null && elToShow.html().trim()){ // not empty
+
+        var hideElement = 1;
+        elToShow.show();
+  		}
+  	  
 			//initial variables
 			var opts = $.extend(defaults, options),
 			$input = $(this),
