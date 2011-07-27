@@ -9,4 +9,8 @@ if ($('select[multiple="multiple"]').length > 0){
 
 
 ** It's prepared to be showed inside hidden elements (perfect for filter elements) **
-This is a jquery bug. It's impossible to set height and width if it's inside a hidden element. And I've changed plugin to allow this.
+This is a jquery bug. It's impossible to set height and width if it's inside a hidden element. 
+
+I've changed plugin to allow this.
+
+Any question: @raulbarrosoleon
