@@ -4,9 +4,10 @@ Additional information
 If you want to customize a multi-select you only have to add an optional class like this (for example):
 
 // This is a multi-select
+command(
 if ($('select[multiple="multiple"]').length > 0){
   customCombo($('select[multiple="multiple"]'),'multi-select');
-}
+})
 
 
 ** It's prepared to be showed inside hidden elements (perfect for filter elements) **
