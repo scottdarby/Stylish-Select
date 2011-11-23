@@ -40,7 +40,28 @@
         <div class="selCont">
             <h2>Simplest example, with multiselect</h2>
             <p>You can use the alphabetical and arrow keys to navigate the list as you would a browser default select.</p>
-            <select class="nomargin" name="provincia[]" id="my-dropdown-multiple" multiple="multiple"><option value="ALICANTE">ALICANTE</option><option value="ALMERIA">ALMERIA</option><option value="BARCELONA">BARCELONA</option><option value="GUADALAJARA">GUADALAJARA</option><option value="ISLAS BALEARES">ISLAS BALEARES</option><option value="LA CORUÑA">LA CORUÑA</option><option value="LAS PALMAS G.CANARIAS">LAS PALMAS G.CANARIAS</option><option value="MADRID">MADRID</option><option value="MALAGA">MALAGA</option><option value="MURCIA">MURCIA</option><option value="NAVARRA">NAVARRA</option><option value="PALMA DE MALLORCA">PALMA DE MALLORCA</option><option value="TOLEDO">TOLEDO</option><option value="VALENCIA">VALENCIA</option><option value="VALLADOLID">VALLADOLID</option></select>
+
+            <select multiple="multiple" id="my-dropdown-multiple" name="tipo_inmueble[]" class="">
+                <optgroup label="Inmueble Residencial" id="tipo_inmueble_residencial">
+                  <option value="PISO">Piso</option>
+                  <option value="LOFT">Loft</option>
+                <option value="ATICO">Ático</option>
+                  <option value="CHALET">Chalet</option>
+                  <option value="DUPLEX">Dúplex</option>
+                  <option value="ESTUDIO">Estudio</option>
+                </optgroup>
+                <optgroup label="Otro Inmueble" id="tipo_inmueble_otro">
+                  <option value="OFICINA">Oficina</option>
+                  <option value="EDIFICIO">Edificio</option>
+                  <option value="GARAJE">Garaje</option>
+                  <option value="LOCAL">Local</option>
+                  <option value="NAVE">Nave</option>
+                  <option value="DESPACHO">Despacho</option>
+                  <option value="SALON ACTOS">Salón de actos</option>
+                  <option value="HOTEL">Hotel</option>
+                  <option value="PARCELA">Parcela</option>
+                </optgroup>
+              </select>
         </div>        
     </body>
 </html>

@@ -127,7 +127,7 @@ ul.newList li a:focus {-moz-outline-style: none;}
 
 
 /*  MULTI SELECT COMBO */
-div.multi-select a {background:url('bg-check-unchecked.jpg') no-repeat 4px 5px; height:15px; padding:4px 8px 4px 22px!important; width:243px;}
+div.multi-select a {background:url('bg-check-unchecked.jpg') no-repeat 4px 5px; height:15px; padding:4px 8px 4px 22px!important; width:242px;}
 div.multi-select a.checked {background:url('bg-check-checked.jpg') no-repeat 4px 5px; background-color:#F2F2F2!important; color:#666666!important;}
 div.multi-select .hiLite {color:#000000!important; background:url('bg-check-checked.jpg') no-repeat 4px 5px #E6E6E6!important ;}
 div.multi-select .hiLite a {background-color:#E6E6E6!important; color:#666666!important; }
