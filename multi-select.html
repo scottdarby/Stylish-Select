@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>jQuery Stylish Select 0.4.5 plugin examples</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <meta http-equiv="Content-Style-Type" content="text/css" />
+
+        <link rel="stylesheet" type="text/css" href="stylish-select.css" />
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+        <script src="jquery.stylish-select.js" type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $(function(){
+	
+                $('#my-dropdown-multiple').sSelect({ddMaxHeight: '150px',containerClass: 'multi-select',defaultText:'Select multiple'});
+
+            });
+        </script>
+
+        <style type="text/css">
+            body {font-family:Arial, Helvetica, sans-serif; font-size:12px;}
+            .selCont {clear:both; margin-bottom:20px; padding-bottom:40px; float:left; border-bottom:dotted 1px #000; width:600px;}
+        </style>
+
+    </head>
+    <body>
+        <h1>Stylish Select 0.4.5 - @raulbarrosoleon</h1>
+        <a href="https://github.com/rabarroso/Stylish-Select">Get latest source code from GitHub</a>
+        <h2>Usage</h2>
+        <p>First, include the stylesheet, jQuery and the stylish select .js file in your html head tag</p>
+        <p>The plugin can be used to replace any select with the following:</p>
+        <pre class="brush: javascript">
+    $(document).ready(function(){
+    $('#my-dropdown').sSelect({ddMaxHeight: '150px',containerClass: 'multi-select',defaultText:'Select multiple'});
+        // #my-dropdown === select[multiple="multiple"]
+    });
+        </pre>
+        <div class="selCont">
+            <h2>Simplest example, with multiselect</h2>
+            <p>You can use the alphabetical and arrow keys to navigate the list as you would a browser default select.</p>
+            <select class="nomargin" name="provincia[]" id="my-dropdown-multiple" multiple="multiple"><option value="ALICANTE">ALICANTE</option><option value="ALMERIA">ALMERIA</option><option value="BARCELONA">BARCELONA</option><option value="GUADALAJARA">GUADALAJARA</option><option value="ISLAS BALEARES">ISLAS BALEARES</option><option value="LA CORUÑA">LA CORUÑA</option><option value="LAS PALMAS G.CANARIAS">LAS PALMAS G.CANARIAS</option><option value="MADRID">MADRID</option><option value="MALAGA">MALAGA</option><option value="MURCIA">MURCIA</option><option value="NAVARRA">NAVARRA</option><option value="PALMA DE MALLORCA">PALMA DE MALLORCA</option><option value="TOLEDO">TOLEDO</option><option value="VALENCIA">VALENCIA</option><option value="VALLADOLID">VALLADOLID</option></select>
+        </div>        
+    </body>
+</html>

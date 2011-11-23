@@ -78,12 +78,12 @@
 	color:#fff!important;
 }
 
-.stylish-select .newListHover {
+/*.stylish-select .newListHover {
 	background:#ccc!important;
 	color:#000!important;
 	cursor:default;
 }
-
+*/
 .stylish-select .newListSelHover,
 .stylish-select .newListSelFocus {
 	background-position:0 -22px;
@@ -102,6 +102,8 @@
 	font-weight:normal;
 	border-left:1px solid #ccc;
 }
+l
+ul:focus,li:focus {outline:none;}
 
 
 /*CUSTOM SELECT BY MY OWN*/
@@ -117,7 +119,7 @@ ul.newList li a:focus {-moz-outline-style: none;}
 .selectedTxt {width:190px; overflow:hidden; height:16px; padding:0 23px 0 0;}
 .hiLite {background:#999999!important; color:#fff!important;}
 .hiLite a {background:#999999!important; color:#fff!important;}
-.newListHover {background-color:#E6E6E6!important; color:#666666!important; cursor:default;}
+/*.newListHover {background-color:#E6E6E6!important; color:#666666!important; cursor:default;}*/
 .newListOptionTitle {font-weight:bold;}
 .newListOptionTitle ul {margin:3px 0 0;}
 .newListOptionTitle li {font-weight:normal; border-left:1px solid #ccc;}
@@ -125,11 +127,12 @@ ul.newList li a:focus {-moz-outline-style: none;}
 
 
 /*  MULTI SELECT COMBO */
-div.multi-select a {background:url('bg-check-unchecked.jpg') no-repeat 4px 5px; height:15px; padding:4px 8px 4px 22px!important; width:175px;}
-div.multi-select a.checked {background:url('bg-check-checked.jpg') no-repeat 4px 5px; background-color:#E6E6E6!important; color:#666666!important;}
-div.multi-select .hiLite {color:#666666!important; background:url('bg-check-checked.jpg') no-repeat 4px 5px #E6E6E6!important ;}
+div.multi-select a {background:url('bg-check-unchecked.jpg') no-repeat 4px 5px; height:15px; padding:4px 8px 4px 22px!important; width:243px;}
+div.multi-select a.checked {background:url('bg-check-checked.jpg') no-repeat 4px 5px; background-color:#F2F2F2!important; color:#666666!important;}
+div.multi-select .hiLite {color:#000000!important; background:url('bg-check-checked.jpg') no-repeat 4px 5px #E6E6E6!important ;}
 div.multi-select .hiLite a {background-color:#E6E6E6!important; color:#666666!important; }
-div.multi-select .newListHover {background-color:#E6E6E6!important; color:#666666!important;}
+div.multi-select .newListHover {background:url('bg-check-unchecked.jpg') no-repeat 4px 5px; height:15px; padding:4px 8px 4px 22px!important; background-color:#F2F2F2}
+/*div.multi-select .newListHover {background-color:#E6E6E6!important; color:#666666!important; background:url('bg-check-unchecked.jpg') no-repeat 4px 5px;}*/
 .multiListSelected {width:222px; color:#999999; height:25px; padding:9px 0 0 10px; float:left; background:url('bg-select.gif') no-repeat; font:normal 12px Arial; margin-top:3px; z-index:0; position:relative;}
 .multiListSelected span.header {position:absolute; top:5px; left:5px; width:220px; height:20px;}
 .multiListSelected ul {position:absolute; top:25px; left:4px; width:220px; height:110px; background:#fff!important; color:#000!important; border:1px solid #E6E6E6; padding-top:5px 0; display:none; opacity:0; visibility:hidden; filter: alpha(opacity = 0); z-index:100; overflow-y:auto; overflow-x:hidden;}
