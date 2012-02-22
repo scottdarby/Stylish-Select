@@ -81,7 +81,7 @@
             var opts = $.extend(defaults, options),
             $input = $(this),
             $containerDivText    = $('<div class="selectedTxt"></div>'),
-            $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '')+ '"></div>'),
+            $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '') + '"></div>'),
             $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
             $newUl               = $('<ul class="newList"></ul>'),
             itemIndex            = -1,
@@ -123,10 +123,10 @@
                         opts.defaultText = option;
                         currentIndex = prevIndex = i;
                     }
-                    $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+					$newUl.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
                 });
                 //cache list items object
-                $newLi = $newUl.children().children().not('.newListDisabled');
+                $newLi = $newUl.children().children().not('.newListItemDisabled');
 
             } else { //optgroup
                 $input.children('optgroup').each(function(){
@@ -148,11 +148,11 @@
                             opts.defaultText = option;
                             currentIndex = prevIndex = itemIndex;
                         }
-                        $optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
+						$optGroupList.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
                     })
                 });
                 //cache list items object
-                $newLi = $newUl.find('ul li a:not(.newListDisabled)');
+                $newLi = $newUl.find('ul li a:not(.newListItemDisabled)');
             }
 
             //get heights of new elements for use later

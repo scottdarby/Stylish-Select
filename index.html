@@ -1,15 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
     <head>
         <title>jQuery Stylish Select 0.4.7 plugin examples</title>
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-        <meta http-equiv="Content-Style-Type" content="text/css" />
-
         <link rel="stylesheet" type="text/css" href="stylish-select.css" />
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-        <script src="jquery.stylish-select.min.js" type="text/javascript"></script>
+        <script src="jquery.stylish-select.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(function(){
@@ -274,10 +271,20 @@ $('#my-dropdown').sSelect({ddMaxHeight: '300px'});
                 </select>
             </div>
             <div class="selCont">
-                <h2>Disabled Attribute</h2>
+                <h2>Disabled Select</h2>
                 <select disabled="disabled" id="my-dropdown7" name="my-dropdown">
 					<option value="1">Opiate</option>
 					<option value="2">Undertow</option>
+					<option value="3">Aenima</option>
+					<option value="4">Lateralus</option>
+					<option value="9">The Love Movement</option>
+                </select>
+            </div>
+            <div class="selCont">
+                <h2>Disabled Options</h2>
+                <select id="my-dropdown8" name="my-dropdown">
+					<option value="1">Opiate</option>
+					<option disabled="disabled" value="2">Undertow</option>
 					<option value="3">Aenima</option>
 					<option value="4">Lateralus</option>
 					<option value="9">The Love Movement</option>

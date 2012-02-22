@@ -90,6 +90,12 @@
 	filter: alpha(opacity=60);
 }
 
+.stylish-select .newListItemDisabled {
+    opacity: 0.6;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
+}
+
 .stylish-select .newListSelHover,
 .stylish-select .newListSelFocus {
 	background-position:0 -22px;
