@@ -84,6 +84,10 @@
 	cursor:default;
 }
 
+.stylish-select .newListDisabled {
+    color: #D7D7D7!important;
+}
+
 .stylish-select .newListSelHover,
 .stylish-select .newListSelFocus {
 	background-position:0 -22px;
