@@ -1,5 +1,5 @@
 /**
-* Stylish Select 0.4.6 - $ plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.7 - $ plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select/
 * 
 * Copyright (c) 2009 Scott Darby
@@ -85,7 +85,9 @@
 }
 
 .stylish-select .newListDisabled {
-    color: #D7D7D7!important;
+    opacity: 0.6;
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+	filter: alpha(opacity=60);
 }
 
 .stylish-select .newListSelHover,

@@ -1,5 +1,5 @@
 /**
-* Stylish Select 0.4.6 - jQuery plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.7 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select
 * 
 * Requires: jQuery 1.3 or newer
@@ -81,7 +81,7 @@
             var opts = $.extend(defaults, options),
             $input = $(this),
             $containerDivText    = $('<div class="selectedTxt"></div>'),
-            $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + '"></div>'),
+            $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '')+ '"></div>'),
             $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
             $newUl               = $('<ul class="newList"></ul>'),
             itemIndex            = -1,
@@ -103,6 +103,10 @@
             $newUl.wrap($containerDivWrapper);
             $containerDivWrapper = $newUl.parent();
             $input.hide();
+			
+			if($input.is(':disabled')){
+				return;
+			}
 
             //added by Justin Beasley (used for lists initialized while hidden)
             $containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
@@ -119,9 +123,7 @@
                         opts.defaultText = option;
                         currentIndex = prevIndex = i;
                     }
-                    $newUl.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key', key));
-
-
+                    $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
                 });
                 //cache list items object
                 $newLi = $newUl.children().children().not('.newListDisabled');
@@ -146,8 +148,7 @@
                             opts.defaultText = option;
                             currentIndex = prevIndex = itemIndex;
                         }
-                        $optGroupList.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key',key));
-
+                        $optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
                     })
                 });
                 //cache list items object

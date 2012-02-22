@@ -2,19 +2,19 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <title>jQuery Stylish Select 0.4.6 plugin examples</title>
+        <title>jQuery Stylish Select 0.4.7 plugin examples</title>
         <meta http-equiv="content-type" content="text/html;charset=utf-8" />
         <meta http-equiv="Content-Style-Type" content="text/css" />
 
         <link rel="stylesheet" type="text/css" href="stylish-select.css" />
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-        <script src="jquery.stylish-select.js" type="text/javascript"></script>
+        <script src="jquery.stylish-select.min.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(function(){
 	
-                $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6').sSelect();
+                $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6, #my-dropdown7, #my-dropdown8').sSelect();
 		
                 //set max height
                 $('#my-dropdownCountries').sSelect({ddMaxHeight: '300px'});
@@ -49,7 +49,7 @@
     </head>
     <body>
         <form action="" method="post">
-            <h1>Stylish Select 0.4.6</h1>
+            <h1>Stylish Select 0.4.7</h1>
             <h2>A cross-browser, accessible alternative to the standard form element which can be fully customised with CSS</h2>
             <p>Stylish Select attempts to replicate the functionality of the browser default select box as closely as possible with support for keyboard navigation, and intelligent positioning.</p>
             <p>Stylish Select aims to have a minimal code footprint and weighs in at just over 3KB when minified.</p>
@@ -271,6 +271,16 @@ $('#my-dropdown').sSelect({ddMaxHeight: '300px'});
                         <option value="8">Beats, Rhymes and Life</option>
                         <option value="9">The Love Movement</option>
                     </optgroup>
+                </select>
+            </div>
+            <div class="selCont">
+                <h2>Disabled Attribute</h2>
+                <select disabled="disabled" id="my-dropdown7" name="my-dropdown">
+					<option value="1">Opiate</option>
+					<option value="2">Undertow</option>
+					<option value="3">Aenima</option>
+					<option value="4">Lateralus</option>
+					<option value="9">The Love Movement</option>
                 </select>
             </div>
         </form>
