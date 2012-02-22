@@ -119,11 +119,12 @@
                         opts.defaultText = option;
                         currentIndex = prevIndex = i;
                     }
-                    $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+                    $newUl.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key', key));
+
 
                 });
                 //cache list items object
-                $newLi = $newUl.children().children();
+                $newLi = $newUl.children().children().not('.newListDisabled');
 
             } else { //optgroup
                 $input.children('optgroup').each(function(){
@@ -145,11 +146,12 @@
                             opts.defaultText = option;
                             currentIndex = prevIndex = itemIndex;
                         }
-                        $optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
+                        $optGroupList.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key',key));
+
                     })
                 });
                 //cache list items object
-                $newLi = $newUl.find('ul li a');
+                $newLi = $newUl.find('ul li a:not(.newListDisabled)');
             }
 
             //get heights of new elements for use later
@@ -243,7 +245,9 @@
 				
                 //scroll list to selected item
                 if(currentIndex == -1) currentIndex = 0;
-                $newLi.eq(currentIndex).focus();
+                try {
+                    $newLi.eq(currentIndex).focus();
+                } catch(ex) {}
             });
 
             function closeDropDown(fireChange, resetText){
@@ -296,7 +300,7 @@
                     val = $newLi.eq(currentIndex).parent().data('key');
 
                     try {
-                        $input.val(val)
+                        $input.val(val);
                     } catch(ex) {
                         // handle ie6 exception
                         $input[0].selectedIndex = currentIndex;
@@ -311,7 +315,9 @@
                     }
 				
                     if ($containerDivWrapper.is(':visible')){
-                        $newLi.eq(currentIndex).focus();
+                        try {
+                            $newLi.eq(currentIndex).focus();
+                        } catch(ex) {}
                     }
                 }
             }
@@ -452,7 +458,7 @@
             // handle focus on original select element
             $input.focus(function(){
                 $input.next().focus();
-            })
+            });
 
             //add classes on hover
             $containerDivText.bind('mouseenter.sSelect',
