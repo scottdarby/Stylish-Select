@@ -119,11 +119,12 @@
                         opts.defaultText = option;
                         currentIndex = prevIndex = i;
                     }
-                    $newUl.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+                    $newUl.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key', key));
+
 
                 });
                 //cache list items object
-                $newLi = $newUl.children().children();
+                $newLi = $newUl.children().children().not('.newListDisabled');
 
             } else { //optgroup
                 $input.children('optgroup').each(function(){
@@ -145,11 +146,12 @@
                             opts.defaultText = option;
                             currentIndex = prevIndex = itemIndex;
                         }
-                        $optGroupList.append($('<li><a href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
+                        $optGroupList.append($('<li><a href="JavaScript:void(0);"'+($(this).is(':disabled') ? ' class="newListDisabled"' : '')+'>'+option+'</a></li>').data('key',key));
+
                     })
                 });
                 //cache list items object
-                $newLi = $newUl.find('ul li a');
+                $newLi = $newUl.find('ul li a:not(.newListDisabled)');
             }
 
             //get heights of new elements for use later
