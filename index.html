@@ -10,12 +10,12 @@
 
         <script type="text/javascript">
             $(function(){
-	
+
                 $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6, #my-dropdown7, #my-dropdown8').sSelect();
-		
+
                 //set max height
                 $('#my-dropdownCountries').sSelect({ddMaxHeight: '300px'});
-		
+
                 //set value on click
                 $('#setVal').click(function(){
                     $('#my-dropdown5').getSetSSValue('4');
@@ -34,7 +34,7 @@
                     $('#my-dropdown6').append('<option value="newOpt">New Option</option>').resetSS();
                     return false;
                 });
-		
+
             });
         </script>
 
@@ -56,7 +56,7 @@
             <p>The plugin can be used to replace any select with the following:</p>
             <pre class="brush: javascript">
 $(document).ready(function(){
-	$('#my-dropdown').sSelect();
+  $('#my-dropdown').sSelect();
 });
             </pre>
             <div class="selCont">
@@ -116,12 +116,12 @@ $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
                 <pre class="brush: javascript">
 //set value
 $('#setVal').click(function(){
-	$('#my-dropdown5').getSetSSValue(4);
+  $('#my-dropdown5').getSetSSValue(4);
 });
 
 //get value
 $('#getVal').click(function(){
-	alert('The value is: '+$('#my-dropdown5').getSetSSValue());
+  alert('The value is: '+$('#my-dropdown5').getSetSSValue());
 });
                 </pre>
                 <p><a id="setVal" href="javascript:void(0)">Set value to 4</a></p>
@@ -141,7 +141,7 @@ $('#getVal').click(function(){
                 <pre class="brush: javascript">
 //add options to select and update
 $('#addOptions').click(function(){
-	$('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
+  $('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
 });
                 </pre>
                 <p>If you add or remove options from the initial select element on the page, be sure to call the .resetSS() method on the select to update the Stylish Select replacement.</p>
@@ -273,21 +273,21 @@ $('#my-dropdown').sSelect({ddMaxHeight: '300px'});
             <div class="selCont">
                 <h2>Disabled Select</h2>
                 <select disabled="disabled" id="my-dropdown7" name="my-dropdown">
-					<option value="1">Opiate</option>
-					<option value="2">Undertow</option>
-					<option value="3">Aenima</option>
-					<option value="4">Lateralus</option>
-					<option value="9">The Love Movement</option>
+                <option value="1">Opiate</option>
+                <option value="2">Undertow</option>
+                <option value="3">Aenima</option>
+                <option value="4">Lateralus</option>
+                <option value="9">The Love Movement</option>
                 </select>
             </div>
             <div class="selCont">
                 <h2>Disabled Options</h2>
                 <select id="my-dropdown8" name="my-dropdown">
-					<option value="1">Opiate</option>
-					<option disabled="disabled" value="2">Undertow</option>
-					<option value="3">Aenima</option>
-					<option value="4">Lateralus</option>
-					<option value="9">The Love Movement</option>
+                <option value="1">Opiate</option>
+                <option disabled="disabled" value="2">Undertow</option>
+                <option value="3">Aenima</option>
+                <option selected="selected" value="4">Lateralus</option>
+                <option value="9">The Love Movement</option>
                 </select>
             </div>
         </form>

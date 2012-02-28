@@ -118,12 +118,14 @@
                     var key = $(this).val();
 
                     //add first letter of each word to array
-                    keys.push(option.charAt(0).toLowerCase());
-                    if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true){
-                        opts.defaultText = option;
-                        currentIndex = prevIndex = i;
+                    var isDisabled = $(this).is(':disabled');
+                    if (!isDisabled) {
+                        keys.push(option.charAt(0).toLowerCase());
                     }
-                    $newUl.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+                    $newUl.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
+                        'key' : key,
+                        'selected' : $(this).is(':selected')
+                    }));
                 });
                 //cache list items object
                 $newLi = $newUl.children().children().not('.newListItemDisabled');
@@ -142,18 +144,28 @@
                         var option = $(this).text();
                         var key = $(this).val();
                         //add first letter of each word to array
-                        keys.push(option.charAt(0).toLowerCase());
-                        if ($(this).attr('selected') == 'selected' || $(this).attr('selected') == true)
-                        {
-                            opts.defaultText = option;
-                            currentIndex = prevIndex = itemIndex;
+                        var isDisabled = $(this).is(':disabled');
+                        if (!isDisabled) {
+                            keys.push(option.charAt(0).toLowerCase());
                         }
-                        $optGroupList.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
+                        $optGroupList.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
+                            'key' : key,
+                            'selected' : $(this).is(':selected')
+                        }));
                     })
                 });
                 //cache list items object
                 $newLi = $newUl.find('ul li a:not(.newListItemDisabled)');
             }
+
+            //get selected item from new list (because it doesn't contain disabled options)
+            $newLi.each(function(i){
+                if ($(this).parent().data('selected')){
+                    opts.defaultText = $(this).html();
+                    currentIndex = prevIndex = i;
+                }
+            });
+
 
             //get heights of new elements for use later
             var newUlHeight = $newUl.height(),
@@ -298,7 +310,7 @@
                     .addClass('hiLite');
 
                     var text = $newLi.eq(currentIndex).text(),
-                    val = $newLi.eq(currentIndex).parent().data('key');
+                        val = $newLi.eq(currentIndex).parent().data('key');
 
                     try {
                         $input.val(val);
