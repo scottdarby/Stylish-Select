@@ -1,5 +1,5 @@
 /**
-* Stylish Select 0.4.7 - jQuery plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.8 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select
 *
 * Requires: jQuery 1.3 or newer
