@@ -1,11 +1,11 @@
 /**
 * Stylish Select 0.4.7 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select
-* 
+*
 * Requires: jQuery 1.3 or newer
-* 
+*
 * Contributions from Justin Beasley: http://www.harvest.org/ Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
-* 
+*
 * Dual licensed under the MIT and GPL licenses.
 */
 (function($){
@@ -103,10 +103,10 @@
             $newUl.wrap($containerDivWrapper);
             $containerDivWrapper = $newUl.parent();
             $input.hide();
-			
-			if($input.is(':disabled')){
-				return;
-			}
+
+            if($input.is(':disabled')){
+                return;
+            }
 
             //added by Justin Beasley (used for lists initialized while hidden)
             $containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
@@ -123,7 +123,7 @@
                         opts.defaultText = option;
                         currentIndex = prevIndex = i;
                     }
-					$newUl.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
+                    $newUl.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key', key));
                 });
                 //cache list items object
                 $newLi = $newUl.children().children().not('.newListItemDisabled');
@@ -148,7 +148,7 @@
                             opts.defaultText = option;
                             currentIndex = prevIndex = itemIndex;
                         }
-						$optGroupList.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
+                        $optGroupList.append($('<li><a'+($(this).is(':disabled') ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data('key',key));
                     })
                 });
                 //cache list items object
@@ -231,7 +231,7 @@
                     $(this).data('ssReRender',false);
                     newUlPos();
                 }
-				
+
                 //hide all menus apart from this one
                 $('.SSContainerDivWrapper')
                 .not($(this).next())
@@ -239,11 +239,11 @@
                 .parent()
                 .css('position', 'static')
                 .removeClass('newListSelFocus');
-					
+
                 //show/hide this menu
                 $containerDivWrapper.toggle();
                 positionFix();
-				
+
                 //scroll list to selected item
                 if(currentIndex == -1) currentIndex = 0;
                 try {
@@ -256,12 +256,12 @@
                     prevIndex = currentIndex;
                     $input.change();
                 }
-				
+
                 if(resetText == true){
                     currentIndex = prevIndex;
                     navigateList(currentIndex);
                 }
-				
+
                 $containerDivWrapper.hide();
                 positionHideFix();
             }
@@ -308,13 +308,13 @@
                     }
 
                     $containerDivText.text(text);
-				
+
                     //only fire change event if specified
                     if(fireChange == true){
                         prevIndex = currentIndex;
                         $input.change();
                     }
-				
+
                     if ($containerDivWrapper.is(':visible')){
                         try {
                             $newLi.eq(currentIndex).focus();
@@ -379,7 +379,7 @@
 
                     //check for keyboard shortcuts
                     keyPressed = String.fromCharCode(keycode).toLowerCase();
-                    
+
                     var currentKeyIndex = keys.indexOf(keyPressed);
 
                     if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
