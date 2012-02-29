@@ -1,10 +1,12 @@
 /**
-* Stylish Select 0.4.8 - jQuery plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.9 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select
 *
 * Requires: jQuery 1.3 or newer
 *
-* Contributions from Justin Beasley: http://www.harvest.org/ Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
+* Contributions from Justin Beasley: http://www.harvest.org/ 
+* Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
+* Grigory Zarubin: https://github.com/Craigy-
 *
 * Dual licensed under the MIT and GPL licenses.
 */
@@ -61,10 +63,10 @@
         //added by Justin Beasley
         resetSS: function(){
             var oldOpts = $(this).data('ssOpts');
-            $this = $(this);
-            $this.next().remove();
-            //unbind all events and redraw
-            $this.unbind('.sSelect').sSelect(oldOpts);
+                $this = $(this);
+                $this.next().remove();
+                //unbind all events and redraw
+                $this.unbind('.sSelect').sSelect(oldOpts);
         }
     });
 
@@ -79,17 +81,17 @@
 
             //initial variables
             var opts = $.extend(defaults, options),
-            $input = $(this),
-            $containerDivText    = $('<div class="selectedTxt"></div>'),
-            $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '') + '"></div>'),
-            $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
-            $newUl               = $('<ul class="newList"></ul>'),
-            currentIndex         = -1,
-            prevIndex            = -1,
-            keys                 = [],
-            prevKey              = false,
-            prevented            = false,
-            $newLi;
+                $input = $(this),
+                $containerDivText    = $('<div class="selectedTxt"></div>'),
+                $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '') + '"></div>'),
+                $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
+                $newUl               = $('<ul class="newList"></ul>'),
+                currentIndex         = -1,
+                prevIndex            = -1,
+                keys                 = [],
+                prevKey              = false,
+                prevented            = false,
+                $newLi;
 
             //added by Justin Beasley
             $(this).data('ssOpts',options);
@@ -112,9 +114,9 @@
 
             //add one item to list
             function addItem(item, container) {
-                var option = $(item).text();
-                var key = $(item).val();
-                var isDisabled = $(item).is(':disabled');
+                var option = $(item).text(),
+                    key = $(item).val(),
+                    isDisabled = $(item).is(':disabled');
 
                 if (!isDisabled && !$(item).parents().is(':disabled')) {
                     //add first letter of each word to array
@@ -134,14 +136,15 @@
                         $optGroup = $('<li class="newListOptionTitle ' + ($(this).is(':disabled') ? 'newListOptionDisabled' : '') + '">'+optionTitle+'</li>'),
                         $optGroupList = $('<ul></ul>');
 
-                        $optGroup.appendTo($newUl);
-                        $optGroupList.appendTo($optGroup);
+                    $optGroup.appendTo($newUl);
+                    $optGroupList.appendTo($optGroup);
 
-                        $(this).children().each(function(){
-                            addItem(this, $optGroupList);
-                        });
+                    $(this).children().each(function(){
+                        addItem(this, $optGroupList);
+                    });
                 }
             });
+
             //cache list items object
             $newLi = $newUl.find('li a:not(.newListItemDisabled)').not(function(){
                 return $(this).parents().hasClass('newListOptionDisabled');
@@ -155,12 +158,10 @@
                 }
             });
 
-
             //get heights of new elements for use later
             var newUlHeight = $newUl.height(),
-            containerHeight = $containerDiv.height(),
-            newLiLength     = $newLi.length;
-
+                containerHeight = $containerDiv.height(),
+                newLiLength     = $newLi.length;
 
             //check if a value is selected
             if (currentIndex != -1){
@@ -173,8 +174,8 @@
             //decide if to place the new list above or below the drop-down
             function newUlPos(){
                 var containerPosY = $containerDiv.offset().top,
-                docHeight         = $(window).height(),
-                scrollTop         = $(window).scrollTop();
+                    docHeight     = $(window).height(),
+                    scrollTop     = $(window).scrollTop();
 
                 //if height of list is greater then max height, set list height to max height value
                 if (newUlHeight > parseInt(opts.ddMaxHeight)){
@@ -332,8 +333,8 @@
                     return false;
                 }
                 var $currentOpt  = $targetInput.find(':selected');
-                currentIndex = $targetInput.find('option').index($currentOpt);
-                navigateList(currentIndex);
+                    currentIndex = $targetInput.find('option').index($currentOpt);
+                    navigateList(currentIndex);
             });
 
             //handle up and down keys
@@ -450,8 +451,8 @@
 
             //select next form element in document
             function nextFormElement() {
-                var fields = $('body').find('button,input,textarea,select');
-                var index = fields.index($input);
+                var fields = $('body').find('button,input,textarea,select'),
+                    index = fields.index($input);
                 if (index > -1 && (index + 1) < fields.length) {
                     fields.eq(index + 1).focus();
                 }
