@@ -11,7 +11,7 @@
         <script type="text/javascript">
             $(function(){
 
-                $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6, #my-dropdown7, #my-dropdown8').sSelect();
+                $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6, #my-dropdown7, #my-dropdown8, #my-dropdown9').sSelect();
 
                 //set max height
                 $('#my-dropdownCountries').sSelect({ddMaxHeight: '300px'});
@@ -289,6 +289,24 @@ $('#my-dropdown').sSelect({ddMaxHeight: '300px'});
                 <option value="3">Aenima</option>
                 <option selected="selected" value="4">Lateralus</option>
                 <option value="9">The Love Movement</option>
+                </select>
+            </div>
+            <div class="selCont">
+                <h2>Disabled Grouped options</h2>
+                <select id="my-dropdown9" name="my-dropdown">
+                    <optgroup label="Tool" disabled="disabled">
+                        <option value="1">Opiate</option>
+                        <option value="2">Undertow</option>
+                        <option value="3">Aenima</option>
+                        <option value="4">Lateralus</option>
+                    </optgroup>
+                    <optgroup label="A Tribe Called Quest">
+                        <option value="5">People's Instinctive Travels and the Paths of Rhythm</option>
+                        <option value="6">The Low End Theory</option>
+                        <option value="7" selected="selected">Midnight Marauders</option>
+                        <option value="8">Beats, Rhymes and Life</option>
+                        <option value="9">The Love Movement</option>
+                    </optgroup>
                 </select>
             </div>
         </form>

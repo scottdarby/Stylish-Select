@@ -116,7 +116,7 @@
                 var key = $(item).val();
                 var isDisabled = $(item).is(':disabled');
 
-                if (!isDisabled) {
+                if (!isDisabled && !$(item).parents().is(':disabled')) {
                     //add first letter of each word to array
                     keys.push(option.charAt(0).toLowerCase());
                 }
@@ -131,7 +131,7 @@
                     addItem(this, $newUl);
                 } else {
                     var optionTitle = $(this).attr('label'),
-                        $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
+                        $optGroup = $('<li class="newListOptionTitle ' + ($(this).is(':disabled') ? 'newListOptionDisabled' : '') + '">'+optionTitle+'</li>'),
                         $optGroupList = $('<ul></ul>');
 
                         $optGroup.appendTo($newUl);
@@ -143,7 +143,9 @@
                 }
             });
             //cache list items object
-            $newLi = $newUl.find('li a:not(.newListItemDisabled)');
+            $newLi = $newUl.find('li a:not(.newListItemDisabled)').not(function(){
+                return $(this).parents().hasClass('newListOptionDisabled');
+            });
 
             //get selected item from new list (because it doesn't contain disabled options)
             $newLi.each(function(i){
