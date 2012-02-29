@@ -85,13 +85,13 @@
 }
 
 .stylish-select .newListDisabled {
-    opacity: 0.6;
+	opacity: 0.6;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
 }
 
 .stylish-select .newListItemDisabled {
-    opacity: 0.6;
+	opacity: 0.6;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
 }
@@ -112,5 +112,4 @@
 
 .stylish-select .newListOptionTitle li {
 	font-weight:normal;
-	border-left:1px solid #ccc;
 }
