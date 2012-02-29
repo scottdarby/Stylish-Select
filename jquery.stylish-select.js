@@ -84,7 +84,6 @@
             $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '') + '"></div>'),
             $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
             $newUl               = $('<ul class="newList"></ul>'),
-            itemIndex            = -1,
             currentIndex         = -1,
             prevIndex            = -1,
             keys                 = [],
@@ -111,52 +110,40 @@
             //added by Justin Beasley (used for lists initialized while hidden)
             $containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
 
-            //test for optgroup
-            if ($input.children('optgroup').length == 0){
-                $input.children().each(function(i){
-                    var option = $(this).text();
-                    var key = $(this).val();
+            //add one item to list
+            function addItem(item, container) {
+                var option = $(item).text();
+                var key = $(item).val();
+                var isDisabled = $(item).is(':disabled');
 
+                if (!isDisabled) {
                     //add first letter of each word to array
-                    var isDisabled = $(this).is(':disabled');
-                    if (!isDisabled) {
-                        keys.push(option.charAt(0).toLowerCase());
-                    }
-                    $newUl.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
-                        'key' : key,
-                        'selected' : $(this).is(':selected')
-                    }));
-                });
-                //cache list items object
-                $newLi = $newUl.children().children().not('.newListItemDisabled');
-
-            } else { //optgroup
-                $input.children('optgroup').each(function(){
-                    var optionTitle = $(this).attr('label'),
-                    $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
-                    $optGroupList = $('<ul></ul>');
-
-                    $optGroup.appendTo($newUl);
-                    $optGroupList.appendTo($optGroup);
-
-                    $(this).children().each(function(){
-                        ++itemIndex;
-                        var option = $(this).text();
-                        var key = $(this).val();
-                        //add first letter of each word to array
-                        var isDisabled = $(this).is(':disabled');
-                        if (!isDisabled) {
-                            keys.push(option.charAt(0).toLowerCase());
-                        }
-                        $optGroupList.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
-                            'key' : key,
-                            'selected' : $(this).is(':selected')
-                        }));
-                    })
-                });
-                //cache list items object
-                $newLi = $newUl.find('ul li a:not(.newListItemDisabled)');
+                    keys.push(option.charAt(0).toLowerCase());
+                }
+                container.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
+                    'key' : key,
+                    'selected' : $(item).is(':selected')
+                }));
             }
+
+            $input.children().each(function(){
+                if ($(this).is('option')){
+                    addItem(this, $newUl);
+                } else {
+                    var optionTitle = $(this).attr('label'),
+                        $optGroup = $('<li class="newListOptionTitle">'+optionTitle+'</li>'),
+                        $optGroupList = $('<ul></ul>');
+
+                        $optGroup.appendTo($newUl);
+                        $optGroupList.appendTo($optGroup);
+
+                        $(this).children().each(function(){
+                            addItem(this, $optGroupList);
+                        });
+                }
+            });
+            //cache list items object
+            $newLi = $newUl.find('li a:not(.newListItemDisabled)');
 
             //get selected item from new list (because it doesn't contain disabled options)
             $newLi.each(function(i){
