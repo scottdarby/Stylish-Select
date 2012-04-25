@@ -227,9 +227,10 @@
 
                 //added by Justin Beasley
                 if($(this).data('ssReRender')){
+                    $containerDivWrapper.height('').show();
                     newUlHeight = $newUl.height('').height();
-                    $containerDivWrapper.height('');
                     containerHeight = $containerDiv.height();
+                    $containerDivWrapper.hide();
                     $(this).data('ssReRender',false);
                     newUlPos();
                 }
