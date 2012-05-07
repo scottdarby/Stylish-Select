@@ -83,7 +83,7 @@
             var opts = $.extend(defaults, options),
                 $input = $(this),
                 $containerDivText    = $('<div class="selectedTxt"></div>'),
-                $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? 'newListDisabled' : '') + '"></div>'),
+                $containerDiv        = $('<div class="newListSelected ' + opts.containerClass + ($input.is(':disabled') ? ' newListDisabled' : '') + '"></div>'),
                 $containerDivWrapper = $('<div class="SSContainerDivWrapper" style="visibility:hidden;"></div>'),
                 $newUl               = $('<ul class="newList"></ul>'),
                 currentIndex         = -1,
