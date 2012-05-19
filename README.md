@@ -15,4 +15,4 @@ This is a jquery bug. It's impossible to set height and width if it's inside a h
 
 I've changed plugin to allow this.
 
-Any question: [@raulbarrosoleon](http://twitter.com/raulbarrosoleon)
+Any question: [@raulbleon](http://twitter.com/raulbleon)
