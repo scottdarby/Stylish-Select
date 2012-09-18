@@ -431,13 +431,13 @@
                 keyPress(this);
             });
 
-            $containerDiv.bind('focus.sSelect',function(){
-                $(this).addClass('newListSelFocus');
-                keyPress(this);
+            $newLi.bind('focus.sSelect',function(){
+                $containerDiv.addClass('newListSelFocus');
+                keyPress($containerDiv);
             });
 
-            $containerDiv.bind('blur.sSelect',function(){
-                $(this).removeClass('newListSelFocus');
+            $newLi.bind('blur.sSelect',function(){
+                $containerDiv.removeClass('newListSelFocus');
             });
 
             //hide list on blur
