@@ -216,10 +216,7 @@
             }
 
             function positionHideFix(){
-                $containerDiv.css(
-                {
-                    position: 'static'
-                });
+                $containerDiv.css('position', 'static');
             }
 
             $containerDivText.bind('click.sSelect',function(event){
@@ -270,6 +267,8 @@
             }
 
             $newLi.bind('click.sSelect',function(e){
+                e.preventDefault();
+
                 var $clickedLi = $(e.target);
 
                 //update counter
@@ -338,70 +337,6 @@
                     navigateList(currentIndex);
             });
 
-            //handle up and down keys
-            function keyPress(element){
-                //when keys are pressed
-                $(element).unbind('keydown.sSelect').bind('keydown.sSelect',function(e){
-                    var keycode = e.which;
-
-                    //prevent change function from firing
-                    prevented = true;
-
-                    switch(keycode){
-                        case 40: //down
-                        case 39: //right
-                            incrementList();
-                            return false;
-                            break;
-                        case 38: //up
-                        case 37: //left
-                            decrementList();
-                            return false;
-                            break;
-                        case 33: //page up
-                        case 36: //home
-                            gotoFirst();
-                            return false;
-                            break;
-                        case 34: //page down
-                        case 35: //end
-                            gotoLast();
-                            return false;
-                            break;
-                        case 13: //enter
-                        case 27: //esc
-                            closeDropDown(true);
-                            return false;
-                            break;
-                        case 9: //tab
-                            closeDropDown(true);
-                            nextFormElement();
-                            return false;
-                            break;
-                    }
-
-                    //check for keyboard shortcuts
-                    keyPressed = String.fromCharCode(keycode).toLowerCase();
-
-                    var currentKeyIndex = keys.indexOf(keyPressed);
-
-                    if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
-                        ++currentIndex;
-                        currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
-
-                        if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed){
-                            // if no entry was found or new key pressed search from start of array
-                            currentIndex = keys.indexOf(keyPressed);
-                        }
-
-                        navigateList(currentIndex);
-                        //store last key pressed
-                        prevKey = keyPressed;
-                        return false;
-                    }
-                });
-            }
-
             function incrementList(){
                 if (currentIndex < (newLiLength-1)){
                     ++currentIndex;
@@ -426,18 +361,73 @@
                 navigateList(currentIndex);
             }
 
-            $containerDiv.bind('click.sSelect',function(e){
-                e.stopPropagation();
-                keyPress(this);
+            $containerDiv.bind('focus.sSelect',function(){
+                $(this).addClass('newListSelFocus');
             });
 
-            $newLi.bind('focus.sSelect',function(){
-                $containerDiv.addClass('newListSelFocus');
-                keyPress($containerDiv);
+            $containerDiv.bind('blur.sSelect',function(){
+                $(this).removeClass('newListSelFocus');
             });
 
-            $newLi.bind('blur.sSelect',function(){
-                $containerDiv.removeClass('newListSelFocus');
+            //handle up and down keys
+            $containerDiv.bind('keydown.sSelect',function(e){
+                var keycode = e.which;
+
+                //prevent change function from firing
+                prevented = true;
+
+                switch(keycode){
+                    case 40: //down
+                    case 39: //right
+                        incrementList();
+                        return false;
+                        break;
+                    case 38: //up
+                    case 37: //left
+                        decrementList();
+                        return false;
+                        break;
+                    case 33: //page up
+                    case 36: //home
+                        gotoFirst();
+                        return false;
+                        break;
+                    case 34: //page down
+                    case 35: //end
+                        gotoLast();
+                        return false;
+                        break;
+                    case 13: //enter
+                    case 27: //esc
+                        closeDropDown(true);
+                        return false;
+                        break;
+                    case 9: //tab
+                        closeDropDown(true);
+                        nextFormElement();
+                        return false;
+                        break;
+                }
+
+                //check for keyboard shortcuts
+                keyPressed = String.fromCharCode(keycode).toLowerCase();
+
+                var currentKeyIndex = keys.indexOf(keyPressed);
+
+                if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
+                    ++currentIndex;
+                    currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
+
+                    if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed){
+                        // if no entry was found or new key pressed search from start of array
+                        currentIndex = keys.indexOf(keyPressed);
+                    }
+
+                    navigateList(currentIndex);
+                    //store last key pressed
+                    prevKey = keyPressed;
+                    return false;
+                }
             });
 
             //hide list on blur
