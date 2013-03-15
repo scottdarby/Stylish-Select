@@ -453,6 +453,9 @@
             function nextFormElement() {
                 var fields = $('body').find('button,input,textarea,select'),
                     index = fields.index($input);
+                if(fields.eq(index + 1).attr('style') == 'display: none;') {
+                    fields.eq(index + 1).next().focus();                    
+                }
                 if (index > -1 && (index + 1) < fields.length) {
                     fields.eq(index + 1).focus();
                 }
