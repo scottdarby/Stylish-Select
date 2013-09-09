@@ -96,6 +96,10 @@
             //added by Justin Beasley
             $(this).data('ssOpts',options);
 
+            if( $(this).next('.newListSelected').length ) {
+                return;
+            }
+
             //build new list
             $containerDiv.insertAfter($input);
             $containerDiv.attr("tabindex", $input.attr("tabindex") || "0");
