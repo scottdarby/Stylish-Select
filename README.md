@@ -7,7 +7,7 @@ A cross-browser, accessible alternative to the standard form select element whic
 The author of the plugin doesn't have enough time to maintain this pretty work but many people are still waiting for some bugfixes and enhancements.
 This fork is just an attempt to support the plugin. You can also help the author ;-)
 
-### History (Differences form the main repo)
+### History (Differences from the main repo)
 
 * Arrows keys didn't work in IE7/8 after the plugin initialization ([#41] (https://github.com/scottdarby/Stylish-Select/issues/41)).
 * Fixed bug when selectors getting height equal to zero in hidden containers ([#31] (https://github.com/scottdarby/Stylish-Select/pull/31), [#38] (https://github.com/scottdarby/Stylish-Select/pull/38)).
