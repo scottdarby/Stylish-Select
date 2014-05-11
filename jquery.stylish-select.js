@@ -11,6 +11,7 @@
 * Dual licensed under the MIT and GPL licenses.
 */
 (function($){
+
     //add class to html tag
     $('html').addClass('stylish-select');
 
@@ -75,8 +76,8 @@
             var defaults = {
                 defaultText:    'Please select',
                 animationSpeed: 0, //set speed of dropdown
-                ddMaxHeight:    '', //set css max-height value of dropdown
-                containerClass: '' //additional classes for container div
+                ddMaxHeight:    '300', //set css max-height value of dropdown
+                containerClass: '', //additional classes for container div
             };
 
             //initial variables
@@ -89,9 +90,15 @@
                 currentIndex         = -1,
                 prevIndex            = -1,
                 keys                 = [],
+                OriginalArray        = [],
+                SubArraykeys         = [],
+                LettersBuffer        = '',
                 prevKey              = false,
                 prevented            = false,
+                KeysCounter          = 0,
+                myTimeout            = -1,
                 $newLi;
+
 
             //added by Justin Beasley
             $(this).data('ssOpts',options);
@@ -119,17 +126,65 @@
             //add one item to list
             function addItem(item, container) {
                 var option = $(item).text(),
+
                     key = $(item).val(),
                     isDisabled = $(item).is(':disabled');
 
                 if (!isDisabled && !$(item).parents().is(':disabled')) {
                     //add first letter of each word to array
                     keys.push(option.charAt(0).toLowerCase());
+                    OriginalArray.push(option);
                 }
                 container.append($('<li><a'+(isDisabled ? ' class="newListItemDisabled"' : '')+' href="JavaScript:void(0);">'+option+'</a></li>').data({
                     'key' : key,
                     'selected' : $(item).is(':selected')
                 }));
+            }
+
+
+            // Sets the timeout values and returns the needed value's index
+            function SearchWithin() {
+
+                if(myTimeout) {clearTimeout(myTimeout)}
+                myTimeout = setTimeout (function(){ResetStack()},2000)
+
+                return(filterSubArray());
+            }
+
+
+            // Initialize the Subarray according to the first entered letter
+            function PopulateSubArray(){
+
+                    OriginalArray.forEach(function(item, index){
+                        if (item.toLowerCase().indexOf(LettersBuffer.toString().toLowerCase()) == 0) {
+                            SubArraykeys.push({OriginalIndex: index, OriginalValue: item})
+                        }
+                    })
+            }
+
+            // Re-filter the array with each new letter added
+            function filterSubArray(){
+                    for (i = 0; i < SubArraykeys.length; ++i) {
+                        var OriginalString = SubArraykeys[i].OriginalValue.toString().toLowerCase();
+                        var NewString = LettersBuffer.toString().toLowerCase();
+
+                        if (OriginalString.indexOf(NewString) != 0) {
+                            SubArraykeys.splice(i--, 1);
+                        }
+                    }
+                    if(SubArraykeys.length>0)
+                        return SubArraykeys[0].OriginalIndex;
+                    else
+                    {
+                        return currentIndex;
+                    }
+            }
+
+            // Clears the Stack if the dropdownlist is blurred or two seconds pass
+            function ResetStack(){
+                SubArraykeys         = [];
+                KeysCounter          = 0;
+                LettersBuffer        = '';
             }
 
             $input.children().each(function(){
@@ -160,6 +215,7 @@
                     opts.defaultText = $(this).html();
                     currentIndex = prevIndex = i;
                 }
+
             });
 
             //get heights of new elements for use later
@@ -385,18 +441,23 @@
 
                     //check for keyboard shortcuts
                     keyPressed = String.fromCharCode(keycode).toLowerCase();
+                    LettersBuffer += keyPressed;
 
-                    var currentKeyIndex = keys.indexOf(keyPressed);
-
+                    if(!KeysCounter)
+                    {
+                         PopulateSubArray();
+                         KeysCounter++;
+                    }
+                    var currentKeyIndex = SearchWithin();
+                   
                     if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
                         ++currentIndex;
                         currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
 
                         if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed){
                             // if no entry was found or new key pressed search from start of array
-                            currentIndex = keys.indexOf(keyPressed);
+                                currentIndex = currentKeyIndex;
                         }
-
                         navigateList(currentIndex);
                         //store last key pressed
                         prevKey = keyPressed;
@@ -448,8 +509,10 @@
                 $containerDiv.removeClass('newListSelFocus');
                 if ($containerDivWrapper.is(':visible')){
                     closeDropDown(false, true);
+                    ResetStack();
                 } else {
                     closeDropDown(false);
+
                 }
             });
 
