@@ -88,18 +88,21 @@
 	opacity: 0.6;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
+  cursor: default;
 }
 
 .stylish-select .newListItemDisabled {
 	opacity: 0.6;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
+  cursor: default;
 }
 
 .stylish-select .newListOptionDisabled {
 	opacity: 0.6;
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 	filter: alpha(opacity=60);
+  cursor: default;
 }
 
 .stylish-select .newListSelHover,

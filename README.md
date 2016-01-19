@@ -9,6 +9,7 @@ This fork is just an attempt to support the plugin. You can also help the author
 
 ### History (Differences from the main repo)
 
+* Options must be visible even if select is disabled.
 * Arrows keys didn't work in IE7/8 after the plugin initialization ([#41] (https://github.com/scottdarby/Stylish-Select/issues/41)).
 * Fixed bug when selectors getting height equal to zero in hidden containers ([#31] (https://github.com/scottdarby/Stylish-Select/pull/31), [#38] (https://github.com/scottdarby/Stylish-Select/pull/38)).
 

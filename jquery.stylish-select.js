@@ -4,7 +4,7 @@
 *
 * Requires: jQuery 1.3 or newer
 *
-* Contributions from Justin Beasley: http://www.harvest.org/ 
+* Contributions from Justin Beasley: http://www.harvest.org/
 * Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
 * Grigory Zarubin: https://github.com/Craigy-
 *
@@ -108,10 +108,6 @@
             $newUl.wrap($containerDivWrapper);
             $containerDivWrapper = $newUl.parent();
             $input.hide();
-
-            if($input.is(':disabled')){
-                return;
-            }
 
             //added by Justin Beasley (used for lists initialized while hidden)
             $containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
@@ -234,6 +230,10 @@
                     $containerDivWrapper.hide();
                     $(this).data('ssReRender',false);
                     newUlPos();
+                }
+
+                if($input.is(':disabled')){
+                    return;
                 }
 
                 //hide all menus apart from this one
@@ -365,13 +365,15 @@
                 navigateList(currentIndex);
             }
 
-            $containerDiv.bind('focus.sSelect',function(){
-                $(this).addClass('newListSelFocus');
-            });
+            if(!$input.is(':disabled')) {
+                $containerDiv.bind('focus.sSelect',function(){
+                    $(this).addClass('newListSelFocus');
+                });
 
-            $containerDiv.bind('blur.sSelect',function(){
-                $(this).removeClass('newListSelFocus');
-            });
+                $containerDiv.bind('blur.sSelect',function(){
+                    $(this).removeClass('newListSelFocus');
+                });
+            }
 
             //handle up and down keys
             $containerDiv.bind('keydown.sSelect',function(e){
@@ -459,15 +461,17 @@
             });
 
             //add classes on hover
-            $containerDivText.bind('mouseenter.sSelect',
-                function(e){
-                    var $hoveredTxt = $(e.target);
-                    $hoveredTxt.parent().addClass('newListSelHover');
-                }).bind('mouseleave.sSelect',
-                function(e){
-                    var $hoveredTxt = $(e.target);
-                    $hoveredTxt.parent().removeClass('newListSelHover');
-                });
+            if(!$input.is(':disabled')) {
+                $containerDivText.bind('mouseenter.sSelect',
+                    function(e){
+                        var $hoveredTxt = $(e.target);
+                        $hoveredTxt.parent().addClass('newListSelHover');
+                    }).bind('mouseleave.sSelect',
+                    function(e){
+                        var $hoveredTxt = $(e.target);
+                        $hoveredTxt.parent().removeClass('newListSelHover');
+                    });
+            }
 
             //reset left property and hide
             $containerDivWrapper.css({
