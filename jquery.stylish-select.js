@@ -4,7 +4,7 @@
 *
 * Requires: jQuery 1.3 or newer
 *
-* Contributions from Justin Beasley: http://www.harvest.org/ 
+* Contributions from Justin Beasley: http://www.harvest.org/
 * Anatoly Ressin: http://www.artazor.lv/ Wilfred Hughes: https://github.com/Wilfred
 * Grigory Zarubin: https://github.com/Craigy-
 *
@@ -108,10 +108,6 @@
             $newUl.wrap($containerDivWrapper);
             $containerDivWrapper = $newUl.parent();
             $input.hide();
-
-            if($input.is(':disabled')){
-                return;
-            }
 
             //added by Justin Beasley (used for lists initialized while hidden)
             $containerDivText.data('ssReRender',!$containerDivText.is(':visible'));
@@ -220,10 +216,7 @@
             }
 
             function positionHideFix(){
-                $containerDiv.css(
-                {
-                    position: 'static'
-                });
+                $containerDiv.css('position', 'static');
             }
 
             $containerDivText.bind('click.sSelect',function(event){
@@ -231,11 +224,16 @@
 
                 //added by Justin Beasley
                 if($(this).data('ssReRender')){
+                    $containerDivWrapper.height('').show();
                     newUlHeight = $newUl.height('').height();
-                    $containerDivWrapper.height('');
                     containerHeight = $containerDiv.height();
+                    $containerDivWrapper.hide();
                     $(this).data('ssReRender',false);
                     newUlPos();
+                }
+
+                if($input.is(':disabled')){
+                    return;
                 }
 
                 //hide all menus apart from this one
@@ -273,6 +271,8 @@
             }
 
             $newLi.bind('click.sSelect',function(e){
+                e.preventDefault();
+
                 var $clickedLi = $(e.target);
 
                 //update counter
@@ -341,70 +341,6 @@
                     navigateList(currentIndex);
             });
 
-            //handle up and down keys
-            function keyPress(element){
-                //when keys are pressed
-                $(element).unbind('keydown.sSelect').bind('keydown.sSelect',function(e){
-                    var keycode = e.which;
-
-                    //prevent change function from firing
-                    prevented = true;
-
-                    switch(keycode){
-                        case 40: //down
-                        case 39: //right
-                            incrementList();
-                            return false;
-                            break;
-                        case 38: //up
-                        case 37: //left
-                            decrementList();
-                            return false;
-                            break;
-                        case 33: //page up
-                        case 36: //home
-                            gotoFirst();
-                            return false;
-                            break;
-                        case 34: //page down
-                        case 35: //end
-                            gotoLast();
-                            return false;
-                            break;
-                        case 13: //enter
-                        case 27: //esc
-                            closeDropDown(true);
-                            return false;
-                            break;
-                        case 9: //tab
-                            closeDropDown(true);
-                            nextFormElement();
-                            return false;
-                            break;
-                    }
-
-                    //check for keyboard shortcuts
-                    keyPressed = String.fromCharCode(keycode).toLowerCase();
-
-                    var currentKeyIndex = keys.indexOf(keyPressed);
-
-                    if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
-                        ++currentIndex;
-                        currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
-
-                        if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed){
-                            // if no entry was found or new key pressed search from start of array
-                            currentIndex = keys.indexOf(keyPressed);
-                        }
-
-                        navigateList(currentIndex);
-                        //store last key pressed
-                        prevKey = keyPressed;
-                        return false;
-                    }
-                });
-            }
-
             function incrementList(){
                 if (currentIndex < (newLiLength-1)){
                     ++currentIndex;
@@ -429,18 +365,75 @@
                 navigateList(currentIndex);
             }
 
-            $containerDiv.bind('click.sSelect',function(e){
-                e.stopPropagation();
-                keyPress(this);
-            });
+            if(!$input.is(':disabled')) {
+                $containerDiv.bind('focus.sSelect',function(){
+                    $(this).addClass('newListSelFocus');
+                });
 
-            $containerDiv.bind('focus.sSelect',function(){
-                $(this).addClass('newListSelFocus');
-                keyPress(this);
-            });
+                $containerDiv.bind('blur.sSelect',function(){
+                    $(this).removeClass('newListSelFocus');
+                });
+            }
 
-            $containerDiv.bind('blur.sSelect',function(){
-                $(this).removeClass('newListSelFocus');
+            //handle up and down keys
+            $containerDiv.bind('keydown.sSelect',function(e){
+                var keycode = e.which;
+
+                //prevent change function from firing
+                prevented = true;
+
+                switch(keycode){
+                    case 40: //down
+                    case 39: //right
+                        incrementList();
+                        return false;
+                        break;
+                    case 38: //up
+                    case 37: //left
+                        decrementList();
+                        return false;
+                        break;
+                    case 33: //page up
+                    case 36: //home
+                        gotoFirst();
+                        return false;
+                        break;
+                    case 34: //page down
+                    case 35: //end
+                        gotoLast();
+                        return false;
+                        break;
+                    case 13: //enter
+                    case 27: //esc
+                        closeDropDown(true);
+                        return false;
+                        break;
+                    case 9: //tab
+                        closeDropDown(true);
+                        nextFormElement();
+                        return false;
+                        break;
+                }
+
+                //check for keyboard shortcuts
+                keyPressed = String.fromCharCode(keycode).toLowerCase();
+
+                var currentKeyIndex = keys.indexOf(keyPressed);
+
+                if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
+                    ++currentIndex;
+                    currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
+
+                    if (currentIndex == -1 || currentIndex == null || prevKey != keyPressed){
+                        // if no entry was found or new key pressed search from start of array
+                        currentIndex = keys.indexOf(keyPressed);
+                    }
+
+                    navigateList(currentIndex);
+                    //store last key pressed
+                    prevKey = keyPressed;
+                    return false;
+                }
             });
 
             //hide list on blur
@@ -468,15 +461,17 @@
             });
 
             //add classes on hover
-            $containerDivText.bind('mouseenter.sSelect',
-                function(e){
-                    var $hoveredTxt = $(e.target);
-                    $hoveredTxt.parent().addClass('newListSelHover');
-                }).bind('mouseleave.sSelect',
-                function(e){
-                    var $hoveredTxt = $(e.target);
-                    $hoveredTxt.parent().removeClass('newListSelHover');
-                });
+            if(!$input.is(':disabled')) {
+                $containerDivText.bind('mouseenter.sSelect',
+                    function(e){
+                        var $hoveredTxt = $(e.target);
+                        $hoveredTxt.parent().addClass('newListSelHover');
+                    }).bind('mouseleave.sSelect',
+                    function(e){
+                        var $hoveredTxt = $(e.target);
+                        $hoveredTxt.parent().removeClass('newListSelHover');
+                    });
+            }
 
             //reset left property and hide
             $containerDivWrapper.css({
