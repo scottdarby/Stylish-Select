@@ -353,7 +353,7 @@
 
                     var currentKeyIndex = keys.indexOf(keyPressed);
 
-                    if (typeof currentKeyIndex != 'undefined'){ //if key code found in array
+                    if (typeof currentKeyIndex != 'undefined' && currentKeyIndex >= 0){ //if key code found in array
                         ++currentIndex;
                         currentIndex = keys.indexOf(keyPressed, currentIndex); //search array from current index
 
