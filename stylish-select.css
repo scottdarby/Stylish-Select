@@ -1,5 +1,5 @@
 /**
-* Stylish Select 0.4.9 - $ plugin to replace a select drop down box with a stylable unordered list
+* Stylish Select 0.4.9 - jQuery plugin to replace a select drop down box with a stylable unordered list
 * http://github.com/scottdarby/Stylish-Select/
 *
 * Copyright (c) 2009 Scott Darby
@@ -12,13 +12,12 @@
 /**
 * Hide lists on page load
 ---------------------------------------------------------*/
-
 .stylish-select .SSContainerDivWrapper {
   left: -9999px;
 }
 
-/*
-* Red example
+/**
+* Demo styles
 ---------------------------------------------------------*/
 .stylish-select .SSContainerDivWrapper {
   margin: 0;
@@ -44,7 +43,6 @@
   margin: 0;
   padding: 0;
 }
-
 
 .stylish-select ul.newList a {
   color: #000;
