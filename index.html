@@ -6,33 +6,35 @@
         <link rel="stylesheet" type="text/css" href="stylish-select.css" />
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
-        <script src="jquery.stylish-select.js" type="text/javascript"></script>
+        <script type="text/javascript" src="jquery.stylish-select.js"></script>
 
         <script type="text/javascript">
             $(function(){
 
                 $('#my-dropdown, #my-dropdown2, #my-dropdown3, #my-dropdown4, #my-dropdown5, #my-dropdown6, #my-dropdown7, #my-dropdown8, #my-dropdown9').sSelect();
 
-                //set max height
+                // Set max height
                 $('#my-dropdownCountries').sSelect({ddMaxHeight: '300px'});
 
-                //set value on click
-                $('#setVal').click(function(){
-                    $('#my-dropdown5').getSetSSValue('4');
+                // Set value on click
+                $('#setVal').on('click', function () {
+                  $('#my-dropdown5').getSetSSValue('4');
                 });
 
-                //get value on click
-                $('#getVal').click(function(){
-                    alert('The value is: '+$('#my-dropdown5').getSetSSValue());
+                // Get value on click
+                $('#getVal').on('click', function () {
+                  alert('The value is: ' + $('#my-dropdown5').getSetSSValue());
                 });
 
-                //alert change event
-                $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
+                // Alert change event
+                $('#my-dropdownChange').sSelect().on('change', function () {
+                  alert('changed');
+                });
 
-                //add options to select and update
-                $('#addOptions').click(function(){
-                    $('#my-dropdown6').append('<option value="newOpt">New Option</option>').resetSS();
-                    return false;
+                // Add options to select and update
+                $('#addOptions').on('click', function () {
+                  $('#my-dropdown6').append('<option value="newOpt">New Option</option>').resetSS();
+                  return false;
                 });
 
             });
@@ -45,7 +47,7 @@
 
     </head>
     <body>
-        <form action="" method="post">
+        <form action="/" method="post">
             <h1>Stylish Select 0.4.9</h1>
             <h2>A cross-browser, accessible alternative to the standard form element which can be fully customised with CSS</h2>
             <p>Stylish Select attempts to replicate the functionality of the browser default select box as closely as possible with support for keyboard navigation, and intelligent positioning.</p>
@@ -55,8 +57,8 @@
             <p>First, include the stylesheet, jQuery and the stylish select .js file in your html head tag.</p>
             <p>The plugin can be used to replace any select with the following:</p>
             <pre class="brush: javascript">
-$(document).ready(function(){
-$('#my-dropdown').sSelect();
+$(document).ready(function () {
+  $('#my-dropdown').sSelect();
 });
             </pre>
             <div class="selCont">
@@ -78,8 +80,10 @@ $('#my-dropdown').sSelect();
                 <h2>Change event</h2>
                 <p>Stylish Select alters the original select on the page, so you can access it's change event:</p>
                 <pre class="brush: javascript">
-//change event
-$('#my-dropdownChange').sSelect().change(function(){alert('changed')});
+// Change event
+$('#my-dropdownChange').sSelect().on('change', function () {
+  alert('changed');
+});
                 </pre>
                 <select id="my-dropdownChange" name="my-dropdown">
                     <option value="1">A cappella</option>
@@ -115,14 +119,14 @@ $('#my-dropdownChange').sSelect().change(function(){alert('changed')});
             <div id="get-set" class="selCont">
                 <h2>Getting/setting the value</h2>
                 <pre class="brush: javascript">
-//set value
-$('#setVal').click(function(){
-$('#my-dropdown5').getSetSSValue(4);
+// Set value
+$('#setVal').on('click', function () {
+  $('#my-dropdown5').getSetSSValue(4);
 });
 
-//get value
-$('#getVal').click(function(){
-alert('The value is: '+$('#my-dropdown5').getSetSSValue());
+// Get value
+$('#getVal').on('click', function () {
+  alert('The value is: ' + $('#my-dropdown5').getSetSSValue());
 });
                 </pre>
                 <p><a id="setVal" href="javascript:void(0)">Set value to 4</a></p>
@@ -140,9 +144,9 @@ alert('The value is: '+$('#my-dropdown5').getSetSSValue());
             <div id="update" class="selCont">
                 <h2>Add new options to Stylish Select</h2>
                 <pre class="brush: javascript">
-//add options to select and update
-$('#addOptions').click(function(){
-$('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
+// Add options to select and update
+$('#addOptions').on('click', function () {
+  $('#my-dropdown6').append('&lt;option value="newOpt">New Option&lt;/option&gt;').resetSS();
 });
                 </pre>
                 <p>If you add or remove options from the initial select element on the page, be sure to call the .resetSS() method on the select to update the Stylish Select replacement.</p>
