@@ -207,10 +207,11 @@
                 .hide()
                 .parent()
                 .css('position', 'static')
-                .removeClass('newListSelFocus');
+                .removeClass('newListSelFocus newListSelActive');
 
                 //show/hide this menu
                 $containerDivWrapper.toggle();
+                $containerDiv.toggleClass('newListSelActive');
                 positionFix();
 
                 //scroll list to selected item
@@ -232,6 +233,7 @@
                 }
 
                 $containerDivWrapper.hide();
+                $containerDiv.removeClass('newListSelActive');
                 positionHideFix();
             }
 
