@@ -39,9 +39,11 @@
         return this.each(function(){
             var defaults = {
                 defaultText:    'Please select',
-                animationSpeed: 0, //set speed of dropdown
+                animationSpeed: 0,  //set speed of dropdown
                 ddMaxHeight:    '', //set css max-height value of dropdown
-                containerClass: '' //additional classes for container div
+                containerClass: '', //additional classes for container div
+                onCreate:       $.noop,
+                onChange:       $.noop
             };
 
             //initial variables
@@ -135,6 +137,8 @@
                 //set placeholder text
                 $containerDivText.text(opts.defaultText);
             }
+            
+            opts.onCreate($input, $containerDivText, $newUl);
 
             //decide if to place the new list above or below the drop-down
             function newUlPos(){
@@ -294,6 +298,7 @@
                         } catch(ex) {}
                     }
                 }
+                opts.onChange($input, $containerDivText, $newLi.eq(currentIndex));
             }
 
             $input.bind('change.sSelect',function(event){
